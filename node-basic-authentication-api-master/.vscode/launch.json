@@ -13,21 +13,14 @@
                 "<node_internals>/**"
             ]
         },
-    {
-        "type": "node",
-        "request": "launch",
-        "name": "Launch Program",
-        "program": "${workspaceFolder}/mongo.js",
-        "skipFiles": [
-            "<node_internals>/**"
-        ]
-    },
         {
-            "type": "chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}"
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\server.js"
         }
     ]
 }

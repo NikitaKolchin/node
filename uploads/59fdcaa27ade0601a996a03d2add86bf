@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Users] (
+    [Id]   INT            NOT NULL DEFAULT 1,
+    [Age]  INT            NOT NULL,
+    [Name] NVARCHAR (MAX) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
