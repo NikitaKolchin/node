@@ -3,7 +3,10 @@ const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', l
 
 module.exports = {
     authenticate,
-    getAll
+    getAll,
+    add,
+    change,
+    remove
 };
 
 async function authenticate({ username, password }) {
@@ -19,4 +22,16 @@ async function getAll() {
         const { password, ...userWithoutPassword } = u;
         return userWithoutPassword;
     });
+}
+
+async function add() {
+    return {message: 'add new user'};
+}
+
+async function change() {
+    return {message: 'change user'};
+}
+
+async function remove() {
+    return {message: 'remove user'};
 }
