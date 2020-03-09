@@ -1,0 +1,14 @@
+
+{ "id": 1, 
+    "username": "test", 
+    "password": "test", 
+    "firstName": "Test", 
+    "lastName": "User" }
+ { "id": 2, 
+    "username": "nik", 
+    "password": "test",
+     "firstName": "Nik", 
+     "lastName": "Kolch" }
+
+body
+     {"username":"nik","password":"test"}

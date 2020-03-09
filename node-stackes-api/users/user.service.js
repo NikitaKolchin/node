@@ -1,5 +1,22 @@
-﻿// users hardcoded for simplicity, store in a db for production applications
-const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }, { id: 2, username: 'nik', password: 'test', firstName: 'Nik', lastName: 'Kolch' }];
+﻿const MongoClient = require("mongodb").MongoClient;
+   
+const url = "mongodb://localhost:27017/";
+const mongoClient = new MongoClient(url, { useNewUrlParser: true });
+let users;
+mongoClient.connect(function(err, client){
+      
+    const db = client.db("test");
+    const collection = db.collection("users");
+    collection.find().toArray(function(err, results){
+        users = results;        
+        console.log(results);
+        client.close();
+    });
+});
+
+//const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }, { id: 2, username: 'nik', password: 'test', firstName: 'Nik', lastName: 'Kolch' }];
+
+
 
 module.exports = {
     authenticate,
