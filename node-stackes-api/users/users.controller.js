@@ -69,10 +69,20 @@ router.delete("/:id", getUser, async (req, res) => {
     }
 });
 
+//delete all users
+router.delete("/", async (req, res) => {
+  try {
+    await User.deleteMany();
+    res.json({ message: "All users has been deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 //update one user
 router.put("/:id", getUser, async (req, res) => {
     try {
-        const updatedUser = {userName: req.body.username, 
+        const updatedUser = {username: req.body.username, 
                         password: req.body.password,
                         firstName: req.body.firstName, 
                         lastName: req.body.lastName };  

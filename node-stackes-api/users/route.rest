@@ -28,17 +28,11 @@ Content-Type: application/json
 {"username":"kin","password":"test111111"}
 
 ### get user by id
-GET http://localhost:4000/users/5e6a00d3f8570c10c47599f3
+GET http://localhost:4000/users/5e6a5272e12b5e37a8628d28
 Authorization: Basic kin:test
 
-### delete user by id
-DELETE http://localhost:4000/users/5e6a02a1c95f521eb8972d22
-Authorization: Basic kin:test
-
-
-
-### delete user by id
-PUT http://localhost:4000/users/5e6a00d3f8570c10c47599f3
+### update user by id
+PUT http://localhost:4000/users/5e6a5272e12b5e37a8628d28
 Authorization: Basic kin:test
 Content-Type: application/json
 
@@ -48,3 +42,13 @@ Content-Type: application/json
 "firstName": "firDDstName1",
 "lastName": "lasDFtName1"
 }
+
+
+### delete user by id
+DELETE http://localhost:4000/users/5e6a5272e12b5e37a8628d28
+Authorization: Basic kin:test
+
+
+### delete all users
+DELETE http://localhost:4000/users
+Authorization: Basic kin:test
