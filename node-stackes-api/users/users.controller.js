@@ -1,43 +1,85 @@
 ﻿const express = require('express');
 const router = express.Router();
-const userService = require('./user.service');
+const User = require("./User");
+const findUser = require("./findUser");
 
-// routes
-router.post('/authenticate', authenticate);
-router.get('/', getAll);
-router.post('/', add);
-router.put('/', change);
-router.delete('/', remove);
 
-module.exports = router;
+module.exports =  router;
 
-function authenticate(req, res, next) {
-    userService.authenticate(req.body)
-        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
-        .catch(err => next(err));
+//authentication
+router.post('/authenticate', async (req, res, next) => {
+    let user = await findUser.findUser(req.body);
+    user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' });
+});
+
+//get all users
+router.get('/', async (req, res, next) => {
+    try {
+        const users = await User.find()
+        res.json(users)
+      } catch (err) {
+        res.status(500).json({message: err.message})
+      }
+});
+
+//add new user
+router.post('/', async (req, res, next) => {
+    const user = new User({
+        username: req.body.username, 
+        password: req.body.password, 
+        firstName: req.body.firstName, 
+        lastName: req.body.lastName
+      });
+      try {
+        const newUser = await user.save();
+        res.status(201).json({ newUser });
+      } catch (err) {
+        res.status(400).json({ message: err.message });
+      }
+});
+
+//middleware
+async function getUser (req, res, next) {
+    let user;
+    try {
+      user = await User.findById(req.params.id);
+      if (user == null) {
+        return res.status(404).json({ message: "Cannot find User" });
+      }
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+    res.user = user;
+    next();
 }
 
-function getAll(req, res, next) {
-    userService.getAll()
-        .then(users => res.json(users))
-        .catch(err => next(err));
-}
+//get one user by id 
+router.get('/:id',getUser, (req, res) => {
+    res.json(res.user);
+}); 
 
-function add(req, res, next) {
-    userService.add()
-        .then(users => res.json(users))
-        .catch(err => next(err));
-}
+//delete One user
+router.delete("/:id", getUser, async (req, res) => {
+    try {
+      const deletedUserName = res.user.username; 
+      await res.user.deleteOne();
+      res.json({ message: `User ${deletedUserName} has been deleted` });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+});
 
-function change(req, res, next) {
-    userService.change()
-        .then(users => res.json(users))
-        .catch(err => next(err));
-}
-
-function remove(req, res, next) {
-    userService.remove()
-        .then(users => res.json(users))
-        .catch(err => next(err));
-}
+//update one user
+router.put("/:id", getUser, async (req, res) => {
+    try {
+        const updatedUser = {userName: req.body.username, 
+                        password: req.body.password,
+                        firstName: req.body.firstName, 
+                        lastName: req.body.lastName };  
+        const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id}, updatedUser, {new: true});
+        res.json(userArterUpdate);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
 

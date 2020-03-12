@@ -5,6 +5,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const basicAuth = require('_helpers/basic-auth');
 const errorHandler = require('_helpers/error-handler');
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", error => console.log(error));
+db.once("open", () => console.log("connection to db established"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
