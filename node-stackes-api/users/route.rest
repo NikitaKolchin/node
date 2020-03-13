@@ -9,10 +9,11 @@ Authorization: Basic kin:test
 Content-Type: application/json
 
 {
-"username":"kin",
+"username":"kin11",
 "password":"test",
 "firstName": "firstName1",
-"lastName": "lastName1"
+"lastName": "lastName1",
+"isAdmin": false
 }
 
 ### auth correct
@@ -32,20 +33,20 @@ GET http://localhost:4000/users/5e6a5272e12b5e37a8628d28
 Authorization: Basic kin:test
 
 ### update user by id
-PUT http://localhost:4000/users/5e6a5272e12b5e37a8628d28
+PUT http://localhost:4000/users/5e6b3aef6589823390428a56
 Authorization: Basic kin:test
 Content-Type: application/json
 
 {
-"username":"NIK",
+"username":"kin1",
 "password":"test",
 "firstName": "firDDstName1",
-"lastName": "lasDFtName1"
+"lastName": "lasDFtName1",
+"isAdmin": false
 }
 
-
 ### delete user by id
-DELETE http://localhost:4000/users/5e6a5272e12b5e37a8628d28
+DELETE http://localhost:4000/users/5e6b3be16589823390428a57
 Authorization: Basic kin:test
 
 
