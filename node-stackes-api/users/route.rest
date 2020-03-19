@@ -1,15 +1,15 @@
 ### users list
 GET http://localhost:4000/users
-Authorization: Basic kin:test
+Authorization: Basic test:test
 
 
 ### add user
 POST http://localhost:4000/users
-Authorization: Basic kin:test
+Authorization: Basic test:test
 Content-Type: application/json
 
 {
-"username":"kin11",
+"username":"kin",
 "password":"test",
 "firstName": "firstName1",
 "lastName": "lastName1",
