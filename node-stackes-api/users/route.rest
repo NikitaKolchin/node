@@ -1,6 +1,6 @@
 ### users list
 GET http://localhost:4000/users
-Authorization: Basic test:test
+Authorization: Basic kin:test
 
 
 ### add user
