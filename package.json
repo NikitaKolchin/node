@@ -12,7 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mongod": "mongod.exe --dbpath D:\\data\\db\\"
+    "mongodd": "mongod.exe --dbpath D:\\data\\db\\",
+    "mongodc": "mongod.exe --dbpath C:\\data\\db\\"
   },
   "author": "",
   "license": "ISC"

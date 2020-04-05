@@ -6,6 +6,8 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx']
     },
+    entry: './src/index.jsx',
+    devtool: 'eval-source-map',
     module: {
         rules: [
             {
