@@ -23,8 +23,8 @@ import { useEffect } from 'react';
 // }
 
 function AdminPage(){
-    let [user, setUser] = useState([]);
-    useEffect(()=> setUser(JSON.parse(localStorage.getItem('user'))),[]);
+    let [user, setUser] = useState({});
+    useEffect(()=> setUser(JSON.parse(localStorage.getItem('user'))),{});
     return user.isAdmin? <h2>Привет Админ {user.username}</h2>:<h2>Привет юзер {user.username}</h2>;
 }
 
