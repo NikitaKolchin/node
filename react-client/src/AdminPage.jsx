@@ -1,53 +1,46 @@
 import React, {useState} from 'react';
 import { useEffect } from 'react';
 import { userService } from './user.service';
-// class AdminPage extends React.Component{
-//     constructor(props) {
-//         super(props);
-  
-//         this.state = {
-//             user: {}
-//         };
-//     } 
-  
-//     componentDidMount() {
-//         this.setState({ 
-//             user: JSON.parse(localStorage.getItem('user')),
-//         });
-//     }
-  
-//     render(){  
-//         const { user } = this.state;
-//         return user.isAdmin? <h2>Привет Админ {user.username}</h2>:<h2>Привет юзер {user.username}</h2>;
-//     }
-// }
+
 
 function AdminPage(){
-    let [user, setUser] = useState({});
+    let [currentUser, setCurrentUser] = useState({});
     let [users, setUsers] = useState([]);
     useEffect(async ()=>{
-        setUser(JSON.parse(localStorage.getItem('user')));
+        setCurrentUser(JSON.parse(localStorage.getItem('user')));
         setUsers(await userService.getAll())      
     },[]);
 
-    return (
+    function handleChange(e) {
+        e.preventDefault();
+        document.getElementById(`t_${e.target.id}`).textContent = "New text!";
+        console.log(e.target.innerText);
+      }
     
-        <div>
-            {user.firstName}
-            {users.length}
-        
-                     {users.loading && <em>Loading users...</em>}
-                     {users.length &&
-                         <ul>
-                             {users.map((user, index) =>
-                                 <li key={user.id}>
-                                     {user.firstName + ' ' + user.lastName}
-                                 </li>
-                             )}
-                         </ul>
-                     }
-        
-    </div>)
+
+    if (currentUser.isAdmin) {
+        return (  
+            <div>
+                {currentUser.isAdmin?`Admin ${currentUser.username}`:`User ${currentUser.username}`}
+                {users.length &&
+                    <div>
+                        {users.map((user, index) =>
+
+                            <div key={user._id}>
+                                Имя:
+                                <input type="text" id={`t_${user._id}`} defaultValue={user.username}/> <input id={`${user._id}`} type="button" value="save" onClick={handleChange} />
+                            </div>
+                        )}
+                    </div>
+                }
+            </div>)
+    }
+    else 
+        return (  
+            <div>
+                <h1>Access denied</h1>
+            </div>)
+    
 }
 
 export {AdminPage};
