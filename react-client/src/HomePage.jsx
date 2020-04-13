@@ -24,7 +24,7 @@ class HomePage extends React.Component {
     render() {
         const { user, users } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div>
                 <h1>Hi {user.firstName}!</h1>
                 <h3>Users from secure api end point:</h3>
                 {users.loading && <em>Loading users...</em>}

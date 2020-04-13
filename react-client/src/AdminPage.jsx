@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import {User} from './User'
 import { userService } from './user.service';
 
 
@@ -11,11 +11,7 @@ function AdminPage(){
         setUsers(await userService.getAll())      
     },[]);
 
-    function handleChange(e) {
-        e.preventDefault();
-        document.getElementById(`t_${e.target.id}`).textContent = "New text!";
-        console.log(e.target.innerText);
-      }
+
     
 
     if (currentUser.isAdmin) {
@@ -27,8 +23,7 @@ function AdminPage(){
                         {users.map((user, index) =>
 
                             <div key={user._id}>
-                                Имя:
-                                <input type="text" id={`t_${user._id}`} defaultValue={user.username}/> <input id={`${user._id}`} type="button" value="save" onClick={handleChange} />
+                                <User user={user} />
                             </div>
                         )}
                     </div>
