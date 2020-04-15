@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {userService} from './user.service';
 
 
 function User(props) {
@@ -8,6 +9,14 @@ function User(props) {
     function handleChange(e) {
         e.preventDefault();
         setUsername(document.getElementById(`t_${e.target.id}`).value);
+        userService.updateOneUser(
+            {'id' : e.target.id,
+            'username': document.getElementById(`t_${e.target.id}`).value,
+            'password':"test",
+            'firstName': "firDDstName1",
+            'lastName': "lasDFtName1",
+            'isAdmin': false}
+            )
     }
 
     function handleRead(e) {

@@ -33,7 +33,7 @@ GET http://localhost:4000/users/5e6a5272e12b5e37a8628d28
 Authorization: Basic kin:test
 
 ### update user by id
-PUT http://localhost:4000/users/5e6b3aef6589823390428a56
+PUT http://localhost:4000/users/5e7d99c5997f6c1e3061a7ba
 Authorization: Basic kin:test
 Content-Type: application/json
 

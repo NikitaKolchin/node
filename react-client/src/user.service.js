@@ -1,6 +1,7 @@
 export const userService = {
     login,
     logout,
+    updateOneUser,
     getAll
 };
 
@@ -9,7 +10,7 @@ function authHeader() {
     let user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.authdata) {
-        return { 'Authorization': 'Basic ' + user.authdata };
+        return { 'Authorization': 'Basic ' + user.authdata ,  'Content-Type': 'application/json' };
     } else {
         return {};
     }
@@ -49,6 +50,22 @@ function getAll() {
     };
 
     return fetch(`http://localhost:4000/users`, requestOptions).then(handleResponse);
+}
+
+function updateOneUser(user){
+    const requestOptions = {
+        method: 'PUT',
+        headers:  authHeader(),
+        body: JSON.stringify({
+            "username":user.username,
+            "password":user.password,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "isAdmin": user.isAdmin      
+        })
+    };
+
+    return fetch(`http://localhost:4000/users/${user.id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
