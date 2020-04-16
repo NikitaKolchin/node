@@ -30,6 +30,7 @@ router.post('/', async (req, res, next) => {
       password: req.body.password, 
       firstName: req.body.firstName, 
       lastName: req.body.lastName,
+      email: req.body.email, 
       isAdmin: req.body.isAdmin
     });
     try {
@@ -104,6 +105,7 @@ router.put("/:id", getUser, async (req, res) => {
                         password: req.body.password,
                         firstName: req.body.firstName, 
                         lastName: req.body.lastName,
+                        email: req.body.email,
                         isAdmin: req.body.isAdmin
                        };  
         const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id}, updatedUser, {new: true});

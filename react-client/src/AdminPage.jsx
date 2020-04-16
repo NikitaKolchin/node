@@ -6,12 +6,19 @@ import { userService } from './user.service';
 function AdminPage(){
     let [currentUser, setCurrentUser] = useState({});
     let [users, setUsers] = useState([]);
+    let [renderz, setRenderz] = useState(false);
     useEffect(async ()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
         setUsers(await userService.getAll())      
-    },[]);
+    },[renderz]);
 
-
+    function handleAdd(e) {
+        e.preventDefault();
+       // users.push({});
+        setUsers(users.push({username: "sdf"}));
+        setRenderz(true);
+        console.log(users);
+    }
     
 
     if (currentUser.isAdmin) {
@@ -28,6 +35,7 @@ function AdminPage(){
                         )}
                     </div>
                 }
+            <input type="button" value="add" onClick={handleAdd} />    
             </div>)
     }
     else 

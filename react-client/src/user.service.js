@@ -57,10 +57,11 @@ function updateOneUser(user){
         method: 'PUT',
         headers:  authHeader(),
         body: JSON.stringify({
-            "username":user.username,
-            "password":user.password,
+            "username": user.username,
+            "password": user.password,
             "firstName": user.firstName,
             "lastName": user.lastName,
+            "email": user.email,
             "isAdmin": user.isAdmin      
         })
     };
