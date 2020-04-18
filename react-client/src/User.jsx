@@ -13,12 +13,7 @@ function User(props) {
 
     function handleChange(e) {
         e.preventDefault();
-        setUsername(document.getElementById(`username_${e.target.id}`).value);
-        setPassword(document.getElementById(`password_${e.target.id}`).value);
-        setFirstName(document.getElementById(`firstName_${e.target.id}`).value);
-        setLastName(document.getElementById(`lastName_${e.target.id}`).value);
-        setEmail(document.getElementById(`email_${e.target.id}`).value);
-        setAdmin(document.getElementById(`isAdmin_${e.target.id}`).checked);
+
         userService.updateOneUser(
             {'id' : e.target.id,
             'username': document.getElementById(`username_${e.target.id}`).value,
@@ -27,12 +22,20 @@ function User(props) {
             'lastName': document.getElementById(`lastName_${e.target.id}`).value,
             'email': document.getElementById(`email_${e.target.id}`).value,
             'isAdmin': document.getElementById(`isAdmin_${e.target.id}`).checked}
-            )
+            ).then(data =>   {
+                setUsername(data.username);
+                setPassword(data.password);
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
+                setEmail(data.email);
+                setAdmin(data.isAdmin);
+            });
     }
 
     function handleDelete(e) {
         e.preventDefault();
         console.log(username);
+        console.log(password);
     }
 
 

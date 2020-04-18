@@ -2,6 +2,7 @@ export const userService = {
     login,
     logout,
     updateOneUser,
+    addOneUser,
     getAll
 };
 
@@ -67,6 +68,23 @@ function updateOneUser(user){
     };
 
     return fetch(`http://localhost:4000/users/${user.id}`, requestOptions).then(handleResponse);
+}
+
+function addOneUser(user){
+    const requestOptions = {
+        method: 'POST',
+        headers:  authHeader(),
+        body: JSON.stringify({
+            "username": user.username,
+            "password": user.password,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "email": user.email,
+            "isAdmin": user.isAdmin      
+        })
+    };
+
+    return fetch(`http://localhost:4000/users/`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

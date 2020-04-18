@@ -34,8 +34,10 @@ router.post('/', async (req, res, next) => {
       isAdmin: req.body.isAdmin
     });
     try {
-      const newUser = await user.save();
-      res.status(201).json({ newUser });
+      // const newUser = await user.save();
+      // res.status(201).json({ newUser });
+
+      res.status(201).json(await user.save());
     } catch (err) {
       res.status(400).json({ message: err.message });
     }

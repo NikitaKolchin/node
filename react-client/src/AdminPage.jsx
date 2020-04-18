@@ -5,19 +5,27 @@ import { userService } from './user.service';
 
 function AdminPage(){
     let [currentUser, setCurrentUser] = useState({});
+    let [newUser, setNewUser] =useState('');
     let [users, setUsers] = useState([]);
-    let [renderz, setRenderz] = useState(false);
     useEffect(async ()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
         setUsers(await userService.getAll())      
-    },[renderz]);
+    },[]);
 
-    function handleAdd(e) {
-        e.preventDefault();
-       // users.push({});
-        setUsers(users.push({username: "sdf"}));
-        setRenderz(true);
-        console.log(users);
+    useEffect(() => {
+        console.log('useeffect1 username '+newUser.username);
+        console.log('useeffect2 users '+users.length);
+    });
+
+     function handleAddItem(e) {
+       userService.addOneUser({'username': newUser.username}).then(newUser1 => setUsers(users => users.concat(newUser1)));
+         
+        console.log('handleAdd '+ users.length);
+    }
+
+    function handleChangeNewUserName(e){
+        setNewUser({'username': e.target.value});
+        console.log('handleChange '+ users.length);    
     }
     
 
@@ -35,7 +43,10 @@ function AdminPage(){
                         )}
                     </div>
                 }
-            <input type="button" value="add" onClick={handleAdd} />    
+            <input type="text" onClick={handleChangeNewUserName} />    
+            <input type="button" value="add" onClick={handleAddItem}  disabled={!newUser} />  
+             
+             
             </div>)
     }
     else 
