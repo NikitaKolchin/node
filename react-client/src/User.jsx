@@ -4,16 +4,14 @@ import {userService} from './user.service';
 
 function User(props) {
 
-    const [username, setUsername] = useState(props.user.username);
-    const [password, setPassword] = useState(props.user.password);
-    const [firstName, setFirstName] = useState(props.user.firstName);
-    const [lastName, setLastName] = useState(props.user.lastName);
-    const [email, setEmail] = useState(props.user.email);
-    const [isAdmin, setAdmin] = useState(props.user.isAdmin);
+    let [username, setUsername] = useState(props.user.username);
+    let [password, setPassword] = useState(props.user.password);
+    let [firstName, setFirstName] = useState(props.user.firstName);
+    let [lastName, setLastName] = useState(props.user.lastName);
+    let [email, setEmail] = useState(props.user.email);
+    let [isAdmin, setAdmin] = useState(props.user.isAdmin);
 
     function handleChange(e) {
-        e.preventDefault();
-
         userService.updateOneUser(
             {'id' : e.target.id,
             'username': document.getElementById(`username_${e.target.id}`).value,
@@ -34,7 +32,7 @@ function User(props) {
 
 
     return (
-        <div>
+        <div style={{display: "inline-block"}}>
             <input type="text" id={`username_${props.user._id}`} defaultValue={username}/> 
             <input type="text" id={`password_${props.user._id}`} defaultValue={password}/> 
             <input type="text" id={`firstName_${props.user._id}`} defaultValue={firstName}/> 

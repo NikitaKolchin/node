@@ -6,7 +6,7 @@ import { userService } from './user.service';
 function AdminPage(){
     let [currentUser, setCurrentUser] = useState({});
     let [newUser, setNewUser] =useState('');
-    let [users, setUsers] = useState([]);
+    let [users, setUsers] = useState({loading: true});
     useEffect(async ()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
         setUsers(await userService.getAll())      
@@ -22,9 +22,11 @@ function AdminPage(){
 
     function handleDeleteItem(e){
         const del_id = e.target.id;
-       userService.deleteOneUser(del_id).then(setUsers(users => users.filter(item => item._id !== del_id)));
+        userService.deleteOneUser(del_id).then(setUsers(users => users.filter(item => item._id !== del_id)));
     }
     
+
+    if (users.loading) return(<div>Loading information...</div>);
 
     if (currentUser.isAdmin) {
         return (  
@@ -34,8 +36,9 @@ function AdminPage(){
                     <div>
                         {users.map((user, index) =>
 
-                            <div key={user._id}>
-                                <User user={user} /><input type="button" value="delete" id={user._id} onClick={handleDeleteItem} /><br /><br />
+                            <div key={user._id} >
+                                <User user={user} />
+                                <input type="button" value="delete" id={user._id} onClick={handleDeleteItem} /><br /><br />
                             </div>
                         )}
                     </div>
