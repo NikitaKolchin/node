@@ -8,13 +8,6 @@ function AdminPage(){
     let [newUser, setNewUser] =useState('');
     let [users, setUsers] = useState({loading: true});
 
-    // let [username, setUsername] = useState('');
-    // let [password, setPassword] = useState('');
-    // let [firstName, setFirstName] = useState('');
-    // let [lastName, setLastName] = useState('');
-    // let [email, setEmail] = useState('');
-    // let [isAdmin, setAdmin] = useState('');
-
     useEffect(async ()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
         setUsers(await userService.getAll())      
@@ -34,22 +27,17 @@ function AdminPage(){
     }
     
     function handleSaveUser(e) {
+        let id = e.target.id;
         userService.updateOneUser(
-            {'id' : e.target.id,
-            'username': document.getElementById(`username_${e.target.id}`).value,
-            'password':document.getElementById(`password_${e.target.id}`).value,
-            'firstName': document.getElementById(`firstName_${e.target.id}`).value,
-            'lastName': document.getElementById(`lastName_${e.target.id}`).value,
-            'email': document.getElementById(`email_${e.target.id}`).value,
-            'isAdmin': document.getElementById(`isAdmin_${e.target.id}`).checked}
-            ).then(data =>   {
-                // придумать как хранить состояние каждого пользователя
-                // setUsername(data.username);
-                // setPassword(data.password);
-                // setFirstName(data.firstName);
-                // setLastName(data.lastName);
-                // setEmail(data.email);
-                // setAdmin(data.isAdmin);
+            {'id' : id,
+           // 'username': document.getElementById(`username_${e.target.id}`).value,
+            'username': users.find(item => item._id === id).username, 
+            'password':users.find(item => item._id === id).password,
+            'firstName': users.find(item => item._id === id).firstName,
+            'lastName': users.find(item => item._id === id).lastName,
+            'email': users.find(item => item._id === id).email,
+            'isAdmin': users.find(item => item._id === id).isAdmin}
+            ).then(data => { 
                 setUsers(users => users.map((item) =>{
                     if (item._id === data._id) {
                         return item=data;
@@ -59,6 +47,25 @@ function AdminPage(){
                 } ))
             });
     }
+
+    function handleChangeField(e){
+        let field = e.target.id.split('_')[0];
+        let id = e.target.id.split('_')[1];
+        let value = e.target.value;
+        if (field ==='isAdmin') {
+            value =e.target.checked;
+        }
+        setUsers(users => users.map((item) =>{
+            if (item._id === id) {
+                let temp = Object.assign({}, item);
+                temp[field] = value;
+                return item = temp;    
+              } else {
+                return item;
+              }
+        } ))
+    }
+
 
     if (users.loading) return(<div>Loading information...</div>);
 
@@ -72,12 +79,12 @@ function AdminPage(){
 
                             <div key={user._id} >
                                {/* <User user={user} /> */}
-                                <input type="text" id={`username_${user._id}`} defaultValue={user.username}/> 
-                                <input type="text" id={`password_${user._id}`} defaultValue={user.password}/> 
-                                <input type="text" id={`firstName_${user._id}`} defaultValue={user.firstName}/> 
-                                <input type="text" id={`lastName_${user._id}`} defaultValue={user.lastName}/>           
-                                <input type="text" id={`email_${user._id}`} defaultValue={user.email}/> 
-                                <input type="checkbox" id={`isAdmin_${user._id}`} defaultChecked={user.isAdmin}/> 
+                                <input type="text" id={`username_${user._id}`} defaultValue={user.username} onChange={handleChangeField}/> 
+                                <input type="text" id={`password_${user._id}`} defaultValue={user.password} onChange={handleChangeField}/> 
+                                <input type="text" id={`firstName_${user._id}`} defaultValue={user.firstName} onChange={handleChangeField}/> 
+                                <input type="text" id={`lastName_${user._id}`} defaultValue={user.lastName} onChange={handleChangeField}/>           
+                                <input type="text" id={`email_${user._id}`} defaultValue={user.email} onChange={handleChangeField}/> 
+                                <input type="checkbox" id={`isAdmin_${user._id}`} defaultChecked={user.isAdmin} onClick={handleChangeField}/> 
                                 <input type="button" value="save"   id={user._id} onClick={handleSaveUser} />
                                 <input type="button" value="delete" id={user._id} onClick={handleDeleteUser} /><br /><br />
                             </div>

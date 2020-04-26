@@ -94,14 +94,6 @@ function deleteOneUser(id){
     const requestOptions = {
         method: 'DELETE',
         headers:  authHeader()
-        // body: JSON.stringify({
-        //     "username": user.username,
-        //     "password": user.password,
-        //     "firstName": user.firstName,
-        //     "lastName": user.lastName,
-        //     "email": user.email,
-        //     "isAdmin": user.isAdmin      
-        // })
     };
 
     return fetch(`http://localhost:4000/users/${id}`, requestOptions).then(handleResponse);
@@ -120,7 +112,6 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
         return data;
     });
 }
