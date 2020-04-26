@@ -12,20 +12,17 @@ function AdminPage(){
         setUsers(await userService.getAll())      
     },[]);
 
-    useEffect(() => {
-        console.log('useeffect1 username '+newUser.username);
-        console.log('useeffect2 users '+users.length);
-    });
-
-     function handleAddItem(e) {
-       userService.addOneUser({'username': newUser.username}).then(newUser1 => setUsers(users => users.concat(newUser1)));
-         
-        console.log('handleAdd '+ users.length);
+    function handleAddItem(index) {
+       userService.addOneUser({'username': newUser.username}).then(newUser => setUsers(users => users.concat(newUser)));
     }
 
     function handleChangeNewUserName(e){
-        setNewUser({'username': e.target.value});
-        console.log('handleChange '+ users.length);    
+        setNewUser({'username': e.target.value});  
+    }
+
+    function handleDeleteItem(e){
+        const del_id = e.target.id;
+       userService.deleteOneUser(del_id).then(setUsers(users => users.filter(item => item._id !== del_id)));
     }
     
 
@@ -38,15 +35,13 @@ function AdminPage(){
                         {users.map((user, index) =>
 
                             <div key={user._id}>
-                                <User user={user} />
+                                <User user={user} /><input type="button" value="delete" id={user._id} onClick={handleDeleteItem} /><br /><br />
                             </div>
                         )}
                     </div>
                 }
-            <input type="text" onClick={handleChangeNewUserName} />    
-            <input type="button" value="add" onClick={handleAddItem}  disabled={!newUser} />  
-             
-             
+                <input type="text" onChange={handleChangeNewUserName} />    
+                <input type="button" value="add" onClick={handleAddItem}  disabled={!newUser} />    
             </div>)
     }
     else 

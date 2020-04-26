@@ -32,12 +32,6 @@ function User(props) {
             });
     }
 
-    function handleDelete(e) {
-        e.preventDefault();
-        console.log(username);
-        console.log(password);
-    }
-
 
     return (
         <div>
@@ -47,9 +41,7 @@ function User(props) {
             <input type="text" id={`lastName_${props.user._id}`} defaultValue={lastName}/>           
             <input type="text" id={`email_${props.user._id}`} defaultValue={email}/> 
             <input type="checkbox" id={`isAdmin_${props.user._id}`} defaultChecked={isAdmin}/> 
-
             <input id={`${props.user._id}`} type="button" value="save" onClick={handleChange} />
-            <input type="button" value="delete" onClick={handleDelete} />
         </div>)
 
   }

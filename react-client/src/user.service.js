@@ -3,6 +3,7 @@ export const userService = {
     logout,
     updateOneUser,
     addOneUser,
+    deleteOneUser,
     getAll
 };
 
@@ -85,6 +86,25 @@ function addOneUser(user){
     };
 
     return fetch(`http://localhost:4000/users/`, requestOptions).then(handleResponse);
+}
+
+
+
+function deleteOneUser(id){
+    const requestOptions = {
+        method: 'DELETE',
+        headers:  authHeader()
+        // body: JSON.stringify({
+        //     "username": user.username,
+        //     "password": user.password,
+        //     "firstName": user.firstName,
+        //     "lastName": user.lastName,
+        //     "email": user.email,
+        //     "isAdmin": user.isAdmin      
+        // })
+    };
+
+    return fetch(`http://localhost:4000/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
