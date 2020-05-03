@@ -7,7 +7,8 @@ const basicAuth = require('_helpers/basic-auth');
 const errorHandler = require('_helpers/error-handler');
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://nikitos:qwasdx=1@cloudcluster-yl09g.gcp.mongodb.net/test", { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("connection to db established"));
