@@ -2,6 +2,16 @@
 GET http://localhost:4000/users
 Authorization: Basic kin:test
 
+### users list cloud
+GET http://node-euro-2021.appspot.com/users
+Authorization: Basic test:test
+
+
+### delete user by id
+DELETE http://node-euro-2021.appspot.com/users/5eaf1722ef24df0df4e92005
+Authorization: Basic test:test
+
+
 ### add user
 POST http://localhost:4000/users
 Authorization: Basic kin:test
@@ -22,8 +32,8 @@ Content-Type: application/json
 {"username":"kin","password":"test"}
 
 
-### auth cloud
-POST https://8080-dot-11174825-dot-devshell.appspot.com/users/authenticate
+### auth correct cloud
+POST http://node-euro-2021.appspot.com/users/authenticate
 Content-Type: application/json
 
 {"username":"test","password":"test"}
