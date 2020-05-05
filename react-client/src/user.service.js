@@ -7,7 +7,8 @@ export const userService = {
     updateOneUser,
     addOneUser,
     deleteOneUser,
-    getAll
+    getAll,
+    getStakesByUserId
 };
 
 const backendHost = localBackendHost;
@@ -94,7 +95,6 @@ function addOneUser(user){
 }
 
 
-
 function deleteOneUser(id){
     const requestOptions = {
         method: 'DELETE',
@@ -102,6 +102,15 @@ function deleteOneUser(id){
     };
 
     return fetch(`${backendHost}/users/${id}`, requestOptions).then(handleResponse);
+}
+
+function getStakesByUserId(id){
+    const requestOptions = {
+        method: 'GET',
+        headers:  authHeader()
+    };
+
+    return fetch(`${backendHost}/users/${id}/stakes`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

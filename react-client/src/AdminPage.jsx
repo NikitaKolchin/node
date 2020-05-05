@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Checkbox, Button, Grid, Typography, Input, InputLabel, IconButton, InputAdornment, TextField, FormControl} from '@material-ui/core';
-
+import { Link } from 'react-router-dom';
 
 function AdminPage(){
     let [currentUser, setCurrentUser] = useState({});
@@ -151,6 +151,9 @@ function AdminPage(){
                     <Fab color="primary" aria-label="add"  onClick={handleAddItem} disabled={!newUser} > <AddIcon /></Fab>
                     <br /><br />
                     {answer&& <Alert severity="success"><AlertTitle> {answer.message}</AlertTitle></Alert>}  
+                    <p>
+                     <Link to="/login">Logout</Link>
+                </p>
                  </Grid>
             </Grid>)
     }

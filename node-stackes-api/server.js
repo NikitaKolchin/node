@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const config = require('./config');
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
-mongoose.connect(config.get('cloudConnectionString'), { useNewUrlParser: true });
+mongoose.connect(config.get('localConnectionString'), { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("connection to db established"));
@@ -33,4 +33,5 @@ const port = process.env.NODE_ENV === 'production' ? config.get('prodPort') : co
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
     console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
+    console.log('mongodb ', config.get('localConnectionString'));
 });

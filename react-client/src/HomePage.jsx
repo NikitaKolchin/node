@@ -1,48 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 import { userService } from './user.service';
 
-class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
+function HomePage() {
+    let [currentUser, setCurrentUser] = useState({});
+    let [stakes, setStakes] = useState({loading: true});
 
-        this.state = {
-            user: {},
-            users: []
-        };
-    }
+    useEffect(()=>{
+        setCurrentUser(JSON.parse(localStorage.getItem('user')));
+        (async () => {
+            setStakes(await userService.getStakesByUserId(JSON.parse(localStorage.getItem('user'))._id));
+        })();  //повторить в админке
+    },[]);
 
-    componentDidMount() {
-        this.setState({ 
-            user: JSON.parse(localStorage.getItem('user')),
-            users: { loading: true }
-        });
-        userService.getAll().then(users => this.setState({ users }));
-    }
-
-    render() {
-        const { user, users } = this.state;
-        return (
+    return( 
             <div>
-                <h1>Hi {user.firstName}!</h1>
+                <h1>Hi {currentUser.firstName}!</h1>
                 <h3>Users from secure api end point:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.length &&
+                {stakes.loading && <em>Loading users...</em>}
+                {stakes.length &&
                     <ul>
-                        {users.map((user, index) =>
-                            <li key={user.id}>
-                                {user.firstName + ' ' + user.lastName}
+                        {stakes.map((stake, index) =>
+                            <li key={stake.id}>
+                                {stake.home + ' ' + stake.away}
                             </li>
                         )}
                     </ul>
                 }
                 <p>
-                    <Link to="/login">Logout</Link>
+                     <Link to="/login">Logout</Link>
                 </p>
             </div>
-        );
-    }
+    )
 }
-
 export { HomePage };

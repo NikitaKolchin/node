@@ -121,3 +121,20 @@ router.put("/:id", getUser, async (req, res) => {
   }  
 });
 
+
+//update and set stakes
+router.put("/:id/stakes", getUser, async (req, res) => {
+    try {
+        const updatedUser = {stakes: req.body.stakes};  
+        const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id}, updatedUser, {new: true});
+        res.json(userArterUpdate);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+//get one user by id 
+router.get('/:id/stakes',getUser, (req, res) => {
+  res.json(res.user.stakes);
+}); 
+

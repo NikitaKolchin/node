@@ -7,14 +7,21 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
+            "name": "Chrome HomePage",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Chrome AdminPage",
             "url": "http://localhost:3000/admin",
             "webRoot": "${workspaceFolder}"
         },
         {
             "type": "node",
             "request": "attach",
-            "name": "Attach Node",
+            "name": "Debug beckend",
             "port": 9229,
             "skipFiles": [
                 "<node_internals>/**"

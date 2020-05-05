@@ -9,7 +9,12 @@ const userSchema = new Schema({
     isAdmin: {
                type: Boolean,
                default: false
-    } 
+    },
+    stakes: [{
+        matchNo: Number,
+        home: Number,
+        away: Number
+    }] 
 }, {versionKey: false});
 const User = mongoose.model("User", userSchema);
 

@@ -70,3 +70,16 @@ Authorization: Basic kin:test
 ### delete all users
 DELETE http://localhost:4000/users
 Authorization: Basic kin:test
+
+
+### update user stakes by id 
+PUT http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
+Authorization: Basic kin:test
+Content-Type: application/json
+
+{"stakes":[{"matchNo": 1, "home": 2, "away": 0}, {"matchNo":2, "home": 1, "away": 2}]}
+
+
+### get user's stakes by id 
+GET http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
+Authorization: Basic kin:test
