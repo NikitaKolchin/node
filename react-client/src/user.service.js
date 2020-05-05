@@ -10,7 +10,7 @@ export const userService = {
     getAll
 };
 
-const backendHost = cloudBackendHost;
+const backendHost = localBackendHost;
 
 function authHeader() {
     // return authorization header with basic auth credentials

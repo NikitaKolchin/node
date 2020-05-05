@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const config = require('./config');
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
-mongoose.connect(config.get('connectionString'), { useNewUrlParser: true });
+mongoose.connect(config.get('cloudConnectionString'), { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("connection to db established"));

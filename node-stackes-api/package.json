@@ -1,11 +1,11 @@
 {
-    "name": "node-basic-authentication-api",
+    "name": "node-stakes-api",
     "version": "1.0.0",
-    "description": "NodeJS Basic HTTP Authentication API",
+    "description": "NodeJS Basic HTTP Authentication and Stakes API",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cornflourblue/node-basic-authentication-api.git"
+        "url": "https://github.com/NikitaKolchin/node.git"
     },
     "scripts": {
         "start": "nodemon ./server.js",
