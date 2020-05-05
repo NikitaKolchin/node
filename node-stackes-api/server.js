@@ -6,9 +6,10 @@ const bodyParser = require('body-parser');
 const basicAuth = require('_helpers/basic-auth');
 const errorHandler = require('_helpers/error-handler');
 const mongoose = require("mongoose");
+const config = require('./config');
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
-mongoose.connect("mongodb+srv://nikitos:qwasdx=1@cloudcluster-yl09g.gcp.mongodb.net/test", { useNewUrlParser: true });
+mongoose.connect(config.get('connectionString'), { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("connection to db established"));
@@ -28,7 +29,8 @@ app.use('/stakes', require('./stakes/stakes.controller'))
 app.use(errorHandler);
 
 // start server
-const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
+const port = process.env.NODE_ENV === 'production' ? config.get('prodPort') : config.get('devPort');
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
+    console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
 });

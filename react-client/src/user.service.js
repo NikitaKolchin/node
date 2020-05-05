@@ -1,3 +1,6 @@
+const localBackendHost = "http://localhost:4000";
+const cloudBackendHost = "http://node-euro-2021.appspot.com";
+
 export const userService = {
     login,
     logout,
@@ -6,6 +9,8 @@ export const userService = {
     deleteOneUser,
     getAll
 };
+
+const backendHost = cloudBackendHost;
 
 function authHeader() {
     // return authorization header with basic auth credentials
@@ -25,7 +30,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`http://localhost:4000/users/authenticate`, requestOptions)
+    return fetch(`${backendHost}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a user in the response
@@ -51,7 +56,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`http://localhost:4000/users`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/users`, requestOptions).then(handleResponse);
 }
 
 function updateOneUser(user){
@@ -68,7 +73,7 @@ function updateOneUser(user){
         })
     };
 
-    return fetch(`http://localhost:4000/users/${user.id}`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/users/${user.id}`, requestOptions).then(handleResponse);
 }
 
 function addOneUser(user){
@@ -85,7 +90,7 @@ function addOneUser(user){
         })
     };
 
-    return fetch(`http://localhost:4000/users/`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/users/`, requestOptions).then(handleResponse);
 }
 
 
@@ -96,7 +101,7 @@ function deleteOneUser(id){
         headers:  authHeader()
     };
 
-    return fetch(`http://localhost:4000/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

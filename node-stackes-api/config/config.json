@@ -1,0 +1,5 @@
+{
+	"devPort": 4000,
+	"prodPort": 80,
+	"connectionString":"mongodb+srv://nikitos:qwasdx=1@cloudcluster-yl09g.gcp.mongodb.net/test"
+}

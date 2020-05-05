@@ -17,9 +17,8 @@
         "express": "^4.16.3",
         "mongodb": "^3.5.4",
         "mongoose": "^5.9.5",
-        "rootpath": "^0.1.2"
-    },
-    "devDependencies": {
+        "nconf": "^0.10.0",
+        "rootpath": "^0.1.2",
         "nodemon": "^1.19.4"
     }
 }
