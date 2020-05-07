@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const config = require('./config');
 
 //mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
-mongoose.connect(config.get('localConnectionString'), { useNewUrlParser: true });
+mongoose.connect(config.get('cloudConnectionString'), { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("connection to db established"));
@@ -23,7 +23,7 @@ app.use(basicAuth);
 
 // api routes
 app.use('/users', require('./users/users.controller'));
-app.use('/stakes', require('./stakes/stakes.controller'))
+app.use('/matches', require('./matches/matches.controller'))
 
 // global error handler
 app.use(errorHandler);

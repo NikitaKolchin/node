@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { userService } from './user.service';
 
-function HomePage() {
+function InfoPage() {
     const info =
      [{ matchNo: 1,  home: null, away: null, homeName: 'Russia', awayName: 'Scotland', coefficient: 1, enable: true, visability: true}, 
       { matchNo: 2,  home: null, away: null, homeName: 'England', awayName: 'Spain', coefficient: 1, enable: true, visability: true} ];
@@ -20,7 +20,7 @@ function HomePage() {
     return( 
             <div>
                 <h1>Привет, {currentUser.firstName}!</h1>
-                <h3>Сделать ставки можно здесь:</h3>
+                <h3>Информация ТОТО:</h3>
                 {stakes.loading && <em>Loading stakes...</em>}
                 {stakes.length &&
                     <ul>
@@ -32,9 +32,9 @@ function HomePage() {
                     </ul>
                 }
                 <p>
-                    <Link to="/info">Info</Link> {currentUser.isAdmin&&<Link to="/admin">Admin</Link>} <Link to="/login">Logout</Link>
+                <Link to="/">Home</Link> {currentUser.isAdmin&&<Link to="/admin">Admin</Link>} <Link to="/login">Logout</Link> 
                 </p>
             </div>
     )
 }
-export { HomePage };
+export { InfoPage };

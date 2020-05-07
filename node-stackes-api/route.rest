@@ -73,13 +73,29 @@ Authorization: Basic kin:test
 
 
 ### update user stakes by id 
-PUT http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
+PUT http://localhost:4000/users/5eaf08ac1278a43094cf7813/stakes
 Authorization: Basic kin:test
 Content-Type: application/json
 
-{"stakes":[{"matchNo": 1, "home": 2, "away": 0}, {"matchNo":2, "home": 1, "away": 2}]}
+{"stakes":[{"matchNo": 1, "home": 1, "away": 1}, {"matchNo":2, "home": 1, "away": 1}]}
 
 
 ### get user's stakes by id 
 GET http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
 Authorization: Basic kin:test
+
+### add match
+POST http://localhost:4000/matches
+Authorization: Basic test:test
+Content-Type: application/json
+
+{ 
+    "matchNo": 1, 
+    "home": null,
+    "away": null, 
+    "homeName": "Russia",
+    "awayName": "Scotland",
+    "coefficient": 1,
+    "enable": true, 
+    "visability": true
+}

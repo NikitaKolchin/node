@@ -5,6 +5,7 @@ import { PrivateRoute } from './PrivateRoute';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage';
 import { AdminPage } from './AdminPage';
+import { InfoPage } from './InfoPage';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                 <PrivateRoute exact path="/" component={HomePage} />
                 <Route path="/login" component={LoginPage} />
                 <PrivateRoute exact path="/admin" component={AdminPage} />
+                <PrivateRoute exact path="/info" component={InfoPage} />
              </div>
           </Switch>
 

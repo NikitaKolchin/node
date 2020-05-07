@@ -14,18 +14,27 @@ function AdminPage(){
     let [newUser, setNewUser] =useState('');
     let [users, setUsers] = useState({loading: true});
     let [answer, setAnswer] = useState(false);
-  //  let [showPassword, setShowPassword] = useState(false);
 
-    useEffect(async ()=>{
+    // useEffect(async ()=>{
+    //     setCurrentUser(JSON.parse(localStorage.getItem('user')));
+    //     setUsers(await userService.getAll().then(users=>
+    //         users.map((item) =>{
+    //             let temp = Object.assign({}, item);
+    //             temp.showPassword = false;
+    //             return item = temp;    
+    //         } )
+    //     ))      
+    // },[]);
+
+    useEffect(()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
-    //    setUsers(await userService.getAll());
-            setUsers(await userService.getAll().then(users=>
-                users.map((item) =>{
-                    let temp = Object.assign({}, item);
-                    temp.showPassword = false;
-                    return item = temp;    
-                } )
-            ))      
+        (async () => {setUsers(await userService.getAll().then(users=>
+                        users.map((item) =>{
+                            let temp = Object.assign({}, item);
+                            temp.showPassword = false;
+                            return item = temp;    
+                        } )
+            ))})();      
     },[]);
 
     function handleAddItem() {
@@ -111,7 +120,7 @@ function AdminPage(){
             <Grid container>
                 <Grid item>
                     <Typography variant='h3' gutterBottom>
-                        Control Panel: {currentUser.username}
+                        Users control panel: {currentUser.username}
                     </Typography>
                 </Grid>
                     {users.length &&
