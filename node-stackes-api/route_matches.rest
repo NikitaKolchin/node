@@ -1,0 +1,52 @@
+
+### matches list
+GET http://localhost:4000/matches
+Authorization: Basic kin:test
+
+
+### add match
+POST http://localhost:4000/matches
+Authorization: Basic test:test
+Content-Type: application/json
+
+{ 
+    "matchNo": 2, 
+    "home": null,
+    "away": null, 
+    "homeName": "Spain",
+    "awayName": "Italy",
+    "coefficient": 1,
+    "enable": true, 
+    "visability": true
+}
+
+
+### get match by id
+GET http://localhost:4000/matches/5eb425a23ff876341ceffdbd
+Authorization: Basic kin:test
+
+### update match by id
+PUT http://localhost:4000/matches/5eb425a23ff876341ceffdbd
+Authorization: Basic kin:test
+Content-Type: application/json
+
+{ 
+    "matchNo": 2, 
+    "home": null,
+    "away": null, 
+    "homeName": "Russia",
+    "awayName": "Sweden",
+    "coefficient": 1,
+    "enable": true, 
+    "visability": true
+}
+
+### delete match by id
+DELETE http://localhost:4000/matches/5eb568f87c62ba2020f7152f
+Authorization: Basic kin:test
+
+
+### delete all users
+DELETE http://localhost:4000/matches
+Authorization: Basic kin:test
+

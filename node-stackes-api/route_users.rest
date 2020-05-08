@@ -84,18 +84,3 @@ Content-Type: application/json
 GET http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
 Authorization: Basic kin:test
 
-### add match
-POST http://localhost:4000/matches
-Authorization: Basic test:test
-Content-Type: application/json
-
-{ 
-    "matchNo": 1, 
-    "home": null,
-    "away": null, 
-    "homeName": "Russia",
-    "awayName": "Scotland",
-    "coefficient": 1,
-    "enable": true, 
-    "visability": true
-}
