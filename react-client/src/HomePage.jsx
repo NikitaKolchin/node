@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-import { userService } from './user.service';
+import { backendService } from './backend.service';
 
 function HomePage() {
     const info =
@@ -13,7 +13,7 @@ function HomePage() {
     useEffect(()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
         (async () => {
-            setStakes(await userService.getStakesByUserId(JSON.parse(localStorage.getItem('user'))._id));
+            setStakes(await backendService.getStakesByUserId(JSON.parse(localStorage.getItem('user'))._id));
         })();  
     },[]);
 

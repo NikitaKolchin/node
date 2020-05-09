@@ -1,12 +1,12 @@
 const localBackendHost = "http://localhost:4000";
 const cloudBackendHost = "http://node-euro-2021.appspot.com";
 
-export const userService = {
+export const backendService = {
     login,
     logout,
-    updateOneUser,
-    addOneUser,
-    deleteOneUser,
+    updateOne,
+    addOne,
+    deleteOne,
     getAll,
     getStakesByUserId
 };
@@ -51,33 +51,16 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
+function getAll(type) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${backendHost}/users`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/${type}`, requestOptions).then(handleResponse);
 }
 
-function updateOneUser(user){
-    const requestOptions = {
-        method: 'PUT',
-        headers:  authHeader(),
-        body: JSON.stringify({
-            "username": user.username,
-            "password": user.password,
-            "firstName": user.firstName,
-            "lastName": user.lastName,
-            "email": user.email,
-            "isAdmin": user.isAdmin      
-        })
-    };
-
-    return fetch(`${backendHost}/users/${user.id}`, requestOptions).then(handleResponse);
-}
-
-function addOneUser(user){
+function addOne(type, user){
     const requestOptions = {
         method: 'POST',
         headers:  authHeader(),
@@ -91,17 +74,36 @@ function addOneUser(user){
         })
     };
 
-    return fetch(`${backendHost}/users/`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/${type}/`, requestOptions).then(handleResponse);
 }
 
 
-function deleteOneUser(id){
+function updateOne(type, user){
+    const requestOptions = {
+        method: 'PUT',
+        headers:  authHeader(),
+        body: JSON.stringify({
+            "username": user.username,
+            "password": user.password,
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "email": user.email,
+            "isAdmin": user.isAdmin      
+        })
+    };
+
+    return fetch(`${backendHost}/${type}/${user.id}`, requestOptions).then(handleResponse);
+}
+
+
+
+function deleteOne(type, id){
     const requestOptions = {
         method: 'DELETE',
         headers:  authHeader()
     };
 
-    return fetch(`${backendHost}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/${type}/${id}`, requestOptions).then(handleResponse);
 }
 
 function getStakesByUserId(id){

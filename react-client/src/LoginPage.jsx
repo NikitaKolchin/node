@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { userService } from './user.service';
+import { backendService } from './backend.service';
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
-        userService.logout();
+        backendService.logout();
 
         this.state = {
             username: '',
@@ -37,7 +37,7 @@ class LoginPage extends React.Component {
         }
 
         this.setState({ loading: true });
-        userService.login(username, password)
+        backendService.login(username, password)
             .then(
                 user => {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };

@@ -1,12 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { userService } from './user.service';
+import { backendService } from './backend.service';
 import { Alert, AlertTitle} from '@material-ui/lab';
-import { Visibility, VisibilityOff} from '@material-ui/icons';
-import SaveIcon from '@material-ui/icons/Save';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import { Checkbox, Button, Grid, Typography, Input, InputLabel, IconButton, InputAdornment, TextField, FormControl} from '@material-ui/core';
+import { Visibility, VisibilityOff, Save, Delete, Add} from '@material-ui/icons';
+import { Checkbox, Button, Grid, Typography, Input, InputLabel, IconButton, InputAdornment, TextField, FormControl, Fab} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 function AdminPage(){
@@ -28,7 +24,7 @@ function AdminPage(){
 
     useEffect(()=>{
         setCurrentUser(JSON.parse(localStorage.getItem('user')));
-        (async () => {setUsers(await userService.getAll().then(users=>
+        (async () => {setUsers(await backendService.getAll('users').then(users=>
                         users.map((item) =>{
                             let temp = Object.assign({}, item);
                             temp.showPassword = false;
@@ -38,7 +34,7 @@ function AdminPage(){
     },[]);
 
     function handleAddItem() {
-       userService.addOneUser({'username': newUser.username}).then(
+       backendService.addOne('users', {'username': newUser.username}).then(
            newUser => {
                setUsers(users => users.concat(newUser));
                setAnswer( JSON.parse(`{"message":"User ${newUser.username} has been added"}`));
@@ -50,13 +46,13 @@ function AdminPage(){
     }
 
     function handleDeleteUser(id){
-        userService.deleteOneUser(id).then(setUsers(users => users.filter(item => item._id !== id))).then(ans => setAnswer(ans));
+        backendService.deleteOne('users', id).then(setUsers(users => users.filter(item => item._id !== id))).then(ans => setAnswer(ans));
         
     }
     
     function handleSaveUser(id) {
         let foundUser = users.find(item => item._id === id);
-        userService.updateOneUser(
+        backendService.updateOne('users',
             {'id' : foundUser._id,
            // 'username': document.getElementById(`username_${e.target.id}`).value,
             'username': foundUser.username, 
@@ -148,8 +144,8 @@ function AdminPage(){
                                 <TextField type="text_l"  label="Last name" id={user._id} name="lastName" defaultValue={user.lastName}  onChange={handleChangeField}/>           
                                 <TextField type="text_e"  label="Email" id={user._id} name="email"     defaultValue={user.email}     onChange={handleChangeField}/> 
                                 <Checkbox type="checkbox" id={user._id} name="isAdmin" defaultChecked={user.isAdmin} onClick={handleChangeField}/> 
-                                <Button type="button" variant="contained" color="primary"   onClick={()=>handleSaveUser(user._id)} startIcon={<SaveIcon />} > Save </Button>
-                                <Button type="button" variant="contained" onClick={()=>handleDeleteUser(user._id)} startIcon={<DeleteIcon/>}> Delete </Button>   
+                                <Button type="button" variant="contained" color="primary"   onClick={()=>handleSaveUser(user._id)} startIcon={<Save />} > Save </Button>
+                                <Button type="button" variant="contained" onClick={()=>handleDeleteUser(user._id)} startIcon={<Delete/>}> Delete </Button>   
                                 <br /><br />
                             </Grid>
                         )}
@@ -157,7 +153,7 @@ function AdminPage(){
                 }
                 <Grid item> 
                     <TextField type="text_ a" onChange={handleChangeNewUserName} />    
-                    <Fab color="primary" aria-label="add"  onClick={handleAddItem} disabled={!newUser} > <AddIcon /></Fab>
+                    <Fab color="primary" aria-label="add"  onClick={handleAddItem} disabled={!newUser} > <Add /></Fab>
                     <br /><br />
                     {answer&& <Alert severity="success"><AlertTitle> {answer.message}</AlertTitle></Alert>}  
                     <p>
