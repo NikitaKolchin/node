@@ -53,7 +53,7 @@ function AdminPage(){
     function handleSaveUser(id) {
         let foundUser = users.find(item => item._id === id);
         backendService.updateOne('users',
-            {'id' : foundUser._id,
+            {'_id' : foundUser._id,
            // 'username': document.getElementById(`username_${e.target.id}`).value,
             'username': foundUser.username, 
             'password':foundUser.password,

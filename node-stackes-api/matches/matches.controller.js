@@ -57,7 +57,7 @@ async function getMatch (req, res, next) {
     next();
 }
 
-//get one user by id 
+//get one match by id 
 router.get('/:id',getMatch, (req, res) => {
     res.json(res.match);
 }); 
@@ -93,7 +93,7 @@ router.delete("/", async (req, res) => {
   } 
 });
 
-//update one user
+//update one match
 router.put("/:id", getMatch, async (req, res) => {
   if (req.user.isAdmin){
     try {

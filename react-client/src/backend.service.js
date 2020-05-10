@@ -60,39 +60,72 @@ function getAll(type) {
     return fetch(`${backendHost}/${type}`, requestOptions).then(handleResponse);
 }
 
-function addOne(type, user){
+function addOne(type, obj){
+    let body;
+    if (type==='users') {
+        body = {
+            "username": obj.username,
+            "password": obj.password,
+            "firstName": obj.firstName,
+            "lastName": obj.lastName,
+            "email": obj.email,
+            "isAdmin": obj.isAdmin   
+        }
+    }    
+    else if (type==='matches'){
+        body = {
+            "matchNo": obj.matchNo, 
+            "home":obj.home, 
+            "away": obj.away,
+            "homeName":obj.homeName, 
+            "awayName": obj.awayName, 
+            "coefficient": obj.coefficient, 
+            "enable": obj.enable,
+            "visability": obj.visability
+        }
+    }   
     const requestOptions = {
         method: 'POST',
         headers:  authHeader(),
-        body: JSON.stringify({
-            "username": user.username,
-            "password": user.password,
-            "firstName": user.firstName,
-            "lastName": user.lastName,
-            "email": user.email,
-            "isAdmin": user.isAdmin      
-        })
+        body: JSON.stringify(body)
     };
 
     return fetch(`${backendHost}/${type}/`, requestOptions).then(handleResponse);
 }
 
 
-function updateOne(type, user){
+function updateOne(type, obj){
+    let body;
+    if (type==='users') {
+        body = {
+            "username": obj.username,
+            "password": obj.password,
+            "firstName": obj.firstName,
+            "lastName": obj.lastName,
+            "email": obj.email,
+            "isAdmin": obj.isAdmin   
+        }
+    }    
+    else if (type==='matches'){
+        body = {
+            "matchNo": obj.matchNo, 
+            "home":obj.home, 
+            "away": obj.away,
+            "homeName":obj.homeName, 
+            "awayName": obj.awayName, 
+            "coefficient": obj.coefficient, 
+            "enable": obj.enable,
+            "visability": obj.visability
+        }
+    } 
+
     const requestOptions = {
         method: 'PUT',
         headers:  authHeader(),
-        body: JSON.stringify({
-            "username": user.username,
-            "password": user.password,
-            "firstName": user.firstName,
-            "lastName": user.lastName,
-            "email": user.email,
-            "isAdmin": user.isAdmin      
-        })
+        body: JSON.stringify(body)
     };
 
-    return fetch(`${backendHost}/${type}/${user.id}`, requestOptions).then(handleResponse);
+    return fetch(`${backendHost}/${type}/${obj._id}`, requestOptions).then(handleResponse);
 }
 
 
