@@ -119,7 +119,7 @@ function InfoPage() {
                 pageSizeOptions : [10, 60]
             }}  
             title="Matches Information"
-            columns={columns}    
+            columns={columns.slice(0,-2)}    
             data = {matches} 
             />
                 <Link to="/">Home</Link> {currentUser.isAdmin&&<Link to="/admin">Admin</Link>} <Link to="/login">Logout</Link>  
