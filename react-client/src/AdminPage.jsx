@@ -158,7 +158,7 @@ function AdminPage(){
                     {answer&& <Alert severity="success"><AlertTitle> {answer.message}</AlertTitle></Alert>}  
                     <p>
                      <Link to="/login">Logout</Link>
-                </p>
+                    </p>
                  </Grid>
             </Grid>)
     }

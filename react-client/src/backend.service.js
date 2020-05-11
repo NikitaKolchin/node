@@ -1,5 +1,27 @@
 const localBackendHost = "http://localhost:4000";
 const cloudBackendHost = "http://node-euro-2021.appspot.com";
+const teams = { 
+                "Бельгия":"Бельгия", 
+                "Италия":"Италия",
+                "Россия": "Россия",
+                "Финляндия": "Финляндия",
+                "Франция":"Франция",
+                "Польша": "Польша",
+                "Украина":  "Украина",
+                "Испания": "Испания",
+                "Турция" : "Турция",
+                "Англия": "Англия",
+                "Чехия": "Чехия",
+                "Швеция": "Швеция",
+                "Нидерланды": "Нидерланды",
+                "Германия":  "Германия",
+                "Хорватия": "Хорватия",
+                "Австрия": "Австрия",
+                "Португалия": "Португалия",
+                "Швейцария": "Швейцария",
+                "Дания": "Дания",
+                "Уэльс": "Уэльс"
+            };
 
 export const backendService = {
     login,
@@ -8,7 +30,8 @@ export const backendService = {
     addOne,
     deleteOne,
     getAll,
-    getStakesByUserId
+    getStakesByUserId,
+    teams
 };
 
 const backendHost = localBackendHost;

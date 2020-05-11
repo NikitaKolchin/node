@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-
+import MaterialTable from 'material-table';
 import { backendService } from './backend.service';
 
 function HomePage() {
