@@ -38,7 +38,7 @@ function InfoPage() {
                 pageSize: 10,
                 pageSizeOptions : [10, 60]
             }}  
-            title="Matches Information"
+            title={`Matches Information for ${currentUser.username}`}
             columns={columns}    
             data = {matches} 
             editable={{
@@ -118,7 +118,7 @@ function InfoPage() {
                 pageSize: 10,
                 pageSizeOptions : [10, 60]
             }}  
-            title="Matches Information"
+            title={`Matches Information for ${currentUser.username}`}
             columns={columns.slice(0,-2)}    
             data = {matches} 
             />
