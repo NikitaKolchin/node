@@ -31,6 +31,7 @@ export const backendService = {
     deleteOne,
     getAll,
     getStakesByUserId,
+    setStakesByUserId,
     teams
 };
 
@@ -169,6 +170,21 @@ function getStakesByUserId(id){
     };
 
     return fetch(`${backendHost}/users/${id}/stakes`, requestOptions).then(handleResponse);
+}
+
+
+function setStakesByUserId(id, stake){
+    let body = {
+        "home": stake.home,
+        "away": stake.away  
+    }
+    const requestOptions = {
+        method: 'PUT',
+        headers:  authHeader(),
+        body: JSON.stringify(body)
+    };
+
+    return fetch(`${backendHost}/users/${id}/stakes/${stake.matchNo}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -72,15 +72,16 @@ DELETE http://localhost:4000/users
 Authorization: Basic kin:test
 
 
+### get user's stakes by id 
+GET http://localhost:4000/users/5eaf037815ddc728dc670fbc/stakes/
+Authorization: Basic kin:test
+
 ### update user stakes by id 
-PUT http://localhost:4000/users/5eaf08ac1278a43094cf7813/stakes
+PUT http://localhost:4000/users/5eaf037815ddc728dc670fbc/stakes/3
 Authorization: Basic kin:test
 Content-Type: application/json
 
-{"stakes":[{"matchNo": 1, "home": 1, "away": 1}, {"matchNo":2, "home": 1, "away": 1}]}
-
-
-### get user's stakes by id 
-GET http://localhost:4000/users/5ea85d57804b7820f0efc410/stakes
-Authorization: Basic kin:test
-
+{  
+    "home": 6, 
+    "away": 1
+}

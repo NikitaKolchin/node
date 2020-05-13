@@ -33,6 +33,7 @@ router.post('/', async (req, res, next) => {
       email: req.body.email, 
       isAdmin: req.body.isAdmin
     });
+   // добавить массив stakes -----------------------------------------------------------------------------------------------------------------------------------------
     try {
       // const newUser = await user.save();
       // res.status(201).json({ newUser });
@@ -122,11 +123,14 @@ router.put("/:id", getUser, async (req, res) => {
 });
 
 
-//update and set stakes
-router.put("/:id/stakes", getUser, async (req, res) => {
-    try {
-        const updatedUser = {stakes: req.body.stakes};  
-        const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id}, updatedUser, {new: true});
+//update stake by user and matchNo
+router.put("/:id/stakes/:matchNo", getUser, async (req, res) => {
+    try { //юзер должен ставить за себя - сделать проверку ----------------------------------------------------------------------------------------------------------------
+        const updatedStake = {$set:{
+          "stakes.$.home": req.body.home,
+          "stakes.$.away": req.body.away}
+        }
+        const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id, "stakes.matchNo": req.params.matchNo}, updatedStake, {upsert: true, new: true});
         res.json(userArterUpdate);
     } catch (err) {
         res.status(400).json({ message: err.message });

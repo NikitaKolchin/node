@@ -59,42 +59,25 @@ function HomePage() {
                       new Promise((resolve) => {
                         setTimeout(() => {
                           resolve();
-                        //   backendService.updateOne('matches',
-                        //   { "_id": newData._id,
-                        //     "matchNo": newData.matchNo, 
-                        //     "home":newData.home, 
-                        //     "away": newData.away,
-                        //     "homeName":newData.homeName, 
-                        //     "awayName": newData.awayName, 
-                        //     "coefficient": newData.coefficient, 
-                        //     "enable": newData.enable,
-                        //     "visability": newData.visability
-                        //  })
-                        // .then(data => { 
-                        //       setMatches(matches => matches.map((item) =>{
-                        //           if (item._id === data._id) {
-                        //               return item=data;
-                        //             } else {
-                        //               return item;
-                        //             }
-                        //       } ));
-                        //   });
+                          backendService.setStakesByUserId(currentUser._id,
+                          {
+                            "matchNo": newData.matchNo,
+                            "home": newData.home, 
+                            "away": newData.away
+                          })
+                        .then(data => { 
+                              // setStakes(stakes => matches.map((item) =>{
+                              //     if (item._id === data._id) {
+                              //         return item=data;
+                              //       } else {
+                              //         return item;
+                              //       }
+                              // } ));
+                          });
                         }, 600);
                       }),
                   }} 
                 />
-                {/* <h1>Привет, {currentUser.firstName}!</h1>
-                <h3>Сделать ставки можно здесь:</h3>
-                {stakes.loading && <em>Loading stakes...</em>}
-                {stakes.length && matches.length &&
-                    <ul>
-                        {getMergedArray(stakes, matches).map((stake, index) =>
-                            <li key={stake._id}> 
-                                {stake.homeName+ ' '+stake.home +' ' + stake.awayName+' ' + stake.away}
-                            </li>   
-                        )}
-                    </ul>
-                } */}
                 <p>
                     <Link to="/info">Info</Link> {currentUser.isAdmin&&<Link to="/admin">Admin</Link>} <Link to="/login">Logout</Link>
                 </p>
