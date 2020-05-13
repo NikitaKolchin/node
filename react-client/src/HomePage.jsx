@@ -66,13 +66,17 @@ function HomePage() {
                             "away": newData.away
                           })
                         .then(data => { 
-                              // setStakes(stakes => matches.map((item) =>{
-                              //     if (item._id === data._id) {
-                              //         return item=data;
-                              //       } else {
-                              //         return item;
-                              //       }
-                              // } ));
+                              setStakes(stakes => stakes.map((item) =>{
+                                  let updatedStake = data.stakes.find(st => st.matchNo === newData.matchNo);
+                                  if (item.matchNo === updatedStake.matchNo) {
+                                     let temp = Object.assign({}, item);
+                                     temp.home = updatedStake.home;
+                                     temp.away = updatedStake.away;
+                                    return item = temp; 
+                                    } else {
+                                      return item;
+                                    }
+                              } ));
                           });
                         }, 600);
                       }),

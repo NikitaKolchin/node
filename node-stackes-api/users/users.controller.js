@@ -25,15 +25,20 @@ router.get('/', async (req, res, next) => {
 //add new user
 router.post('/', async (req, res, next) => {
   if (req.user.isAdmin){
+    let stakes = [];
+    for (var i = 1; i < 52; i++) {
+      stakes.push({"matchNo": i, "home": null, "away": null});
+     }
     const user = new User({
       username: req.body.username, 
       password: req.body.password, 
       firstName: req.body.firstName, 
       lastName: req.body.lastName,
       email: req.body.email, 
-      isAdmin: req.body.isAdmin
+      isAdmin: req.body.isAdmin,
+      stakes: stakes
     });
-   // добавить массив stakes -----------------------------------------------------------------------------------------------------------------------------------------
+
     try {
       // const newUser = await user.save();
       // res.status(201).json({ newUser });
@@ -103,13 +108,18 @@ router.delete("/", async (req, res) => {
 //update one user
 router.put("/:id", getUser, async (req, res) => {
   if (req.user.isAdmin){
+    // let stakes = [];  //создаём массив матчей при апдейте
+    // for (var i = 1; i < 52; i++) {
+    //   stakes.push({"matchNo": i, "home": null, "away": null});
+    //  }
     try {
         const updatedUser = {username: req.body.username, 
                         password: req.body.password,
                         firstName: req.body.firstName, 
                         lastName: req.body.lastName,
                         email: req.body.email,
-                        isAdmin: req.body.isAdmin
+                        isAdmin: req.body.isAdmin,
+//                        stakes: stakes
                        };  
         const userArterUpdate = await User.findOneAndUpdate({_id: res.user.id}, updatedUser, {new: true});
         res.json(userArterUpdate);
