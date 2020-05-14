@@ -55,12 +55,16 @@ function HomePage() {
         let temp = Object.assign({}, match); //может можно без копирования объекта
         temp.home = stake.home;
         temp.away = stake.away;
+        temp.realHome = match.home;
+        temp.realAway = match.away;
         return (match = temp);
       } else {
         return match;
       }
     });
   };
+
+
   if (matches.loading || stakes.loading)
     return <div>Loading information...</div>;
 
@@ -74,34 +78,15 @@ function HomePage() {
         title={`Set stakes, ${currentUser.username}`}
         columns={columns}
         data={getMergedArray(stakes, matches)}
-        // editable={{
-        //     onRowUpdate: (newData, oldData) =>
-        //       new Promise((resolve) => {
-        //         setTimeout(() => {
-        //           resolve();
-        //           backendService.setStakesByUserId(currentUser._id,
-        //           {
-        //             "matchNo": newData.matchNo,
-        //             "home": newData.home,
-        //             "away": newData.away
-        //           })
-        //         .then(data => {
-        //               setStakes(stakes => stakes.map((item) =>{
-        //                   let updatedStake = data.stakes.find(st => st.matchNo === newData.matchNo);
-        //                   if (item.matchNo === updatedStake.matchNo) {
-        //                      let temp = Object.assign({}, item);
-        //                      temp.home = updatedStake.home;
-        //                      temp.away = updatedStake.away;
-        //                     return item = temp;
-        //                     } else {
-        //                       return item;
-        //                     }
-        //               } ));
-        //           });
-        //         }, 10);
-        //       }),
-        //   }}
+        detailPanel={(rowData) => {
+          if (rowData.enable === false) {
+            return (
+            <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>
+            );
+          }
+        }}
         editable={{
+          isEditable: (rowData) => rowData.enable === true,
           onRowUpdate: (newData, oldData) =>
             backendService
               .setStakesByUserId(currentUser._id, {
