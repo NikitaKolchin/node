@@ -1,21 +1,26 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const userSchema = new Schema({
-    username: String, 
-    password: String, 
-    firstName: String, 
+const userSchema = new Schema(
+  {
+    username: String,
+    password: String,
+    firstName: String,
     lastName: String,
     email: String,
     isAdmin: {
-               type: Boolean,
-               default: false
+      type: Boolean,
+      default: false,
     },
-    stakes: [{
+    stakes: [
+      {
         matchNo: Number,
         home: Number,
-        away: Number
-    }] 
-}, {versionKey: false});
+        away: Number,
+      },
+    ],
+  },
+  { versionKey: false }
+);
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

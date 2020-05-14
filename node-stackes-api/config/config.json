@@ -1,6 +1,6 @@
 {
-	"devPort": 4000,
-	"prodPort": 80,
-	"cloudConnectionString":"mongodb+srv://nikitos:qwasdx=1@cloudcluster-yl09g.gcp.mongodb.net/test",
-	"localConnectionString":"mongodb://localhost:27017/test"
+  "devPort": 4000,
+  "prodPort": 80,
+  "cloudConnectionString": "mongodb+srv://nikitos:qwasdx=1@cloudcluster-yl09g.gcp.mongodb.net/test",
+  "localConnectionString": "mongodb://localhost:27017/test"
 }
