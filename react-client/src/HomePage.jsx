@@ -32,6 +32,9 @@ function HomePage() {
       editable: "never",
     },
     { title: "Enable", field: "enable", type: "boolean", editable: "never" },
+   // { title: "Pets", field: "pets", type: "numeric", cellStyle: rowData => rowData===undefined ? {backgroundColor:'red' }: {backgroundColor:'green'} } 
+    { title: "Pets", render: rowData => <div style={{backgroundColor: (rowData['pets']===3) ? 'red' : 'green'}}>{rowData.pets}  </div> } 
+//  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>}
   ];
 
   useEffect(() => {
@@ -57,12 +60,26 @@ function HomePage() {
         temp.away = stake.away;
         temp.realHome = match.home;
         temp.realAway = match.away;
+        temp.pets = calcPets(temp);
         return (match = temp);
       } else {
         return match;
       }
     });
   };
+
+  const calcPets = (temp) => {
+    const {home, away, realHome, realAway} = temp;
+    if ((home === realHome) && (away === realAway)) {
+      return 5;
+    }
+    else if ((home-away) === (realHome-realAway)) {
+      return 3;
+    }
+   // else if() для направления
+   else return 0;
+
+  }; 
 
 
   if (matches.loading || stakes.loading)
@@ -74,6 +91,17 @@ function HomePage() {
         options={{
           pageSize: 10,
           pageSizeOptions: [10, 60],
+          rowStyle: rowData => {
+            if(rowData.pets === 5) {
+              return {backgroundColor: 'Gold'};
+            }
+            else if(rowData.pets === 3) {
+              return {backgroundColor: 'GoldenRod'};
+            }
+            else if(rowData.pets === 1) {
+              return {backgroundColor: 'LightGreen'};
+            }
+          }
         }}
         title={`Set stakes, ${currentUser.username}`}
         columns={columns}
