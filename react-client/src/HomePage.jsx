@@ -32,9 +32,18 @@ function HomePage() {
       editable: "never",
     },
     { title: "Enable", field: "enable", type: "boolean", editable: "never" },
-   // { title: "Pets", field: "pets", type: "numeric", cellStyle: rowData => rowData===undefined ? {backgroundColor:'red' }: {backgroundColor:'green'} } 
-    { title: "Pets", render: rowData => <div style={{backgroundColor: (rowData['pets']===3) ? 'red' : 'green'}}>{rowData.pets}  </div> } 
-//  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>}
+    // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
+    {
+      title: "Pets",
+      render: (rowData) => (
+        <div
+          style={{ backgroundColor: rowData["pets"] === 5 ? "red" : rowData["pets"] === 3 ? "yellow" : rowData["pets"] === 1? "green" : "white"  }}
+        >
+          {rowData.pets}{" "}
+        </div>
+      ),
+    },
+    //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>}
   ];
 
   useEffect(() => {
@@ -69,18 +78,22 @@ function HomePage() {
   };
 
   const calcPets = (temp) => {
-    const {home, away, realHome, realAway} = temp;
-    if ((home === realHome) && (away === realAway)) {
+    const { home, away, realHome, realAway } = temp;
+    if(home===null || away === null) return 0;
+    let difference = home - away;
+    let realDifference = realHome - realAway;
+    if (home === realHome && away === realAway) {
       return 5;
-    }
-    else if ((home-away) === (realHome-realAway)) {
+    } else if (difference === realDifference) {
       return 3;
-    }
-   // else if() для направления
-   else return 0;
-
-  }; 
-
+    } else if (
+      (difference > 0 && realDifference > 0) ||
+      (difference < 0 && realDifference < 0) ||
+      (difference === 0 && realDifference === 0)
+    ) {
+      return 1;
+    } else return 0;
+  };
 
   if (matches.loading || stakes.loading)
     return <div>Loading information...</div>;
@@ -91,17 +104,15 @@ function HomePage() {
         options={{
           pageSize: 10,
           pageSizeOptions: [10, 60],
-          rowStyle: rowData => {
-            if(rowData.pets === 5) {
-              return {backgroundColor: 'Gold'};
+          rowStyle: (rowData) => {
+            if (rowData.pets === 5) {
+              return { backgroundColor: "Gold" };
+            } else if (rowData.pets === 3) {
+              return { backgroundColor: "GoldenRod" };
+            } else if (rowData.pets === 1) {
+              return { backgroundColor: "LightGreen" };
             }
-            else if(rowData.pets === 3) {
-              return {backgroundColor: 'GoldenRod'};
-            }
-            else if(rowData.pets === 1) {
-              return {backgroundColor: 'LightGreen'};
-            }
-          }
+          },
         }}
         title={`Set stakes, ${currentUser.username}`}
         columns={columns}
@@ -109,7 +120,10 @@ function HomePage() {
         detailPanel={(rowData) => {
           if (rowData.enable === false) {
             return (
-            <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>
+              <div>
+                Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт{" "}
+                {rowData.realHome} : {rowData.realAway}
+              </div>
             );
           }
         }}
@@ -142,6 +156,7 @@ function HomePage() {
         }}
       />
       <p>
+        <Link to="/result">Result</Link>{" "}
         <Link to="/info">Info</Link>{" "}
         {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
         <Link to="/login">Logout</Link>

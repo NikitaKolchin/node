@@ -115,6 +115,7 @@ function InfoPage() {
           }}
         />
         <Link to="/">Home</Link>{" "}
+        <Link to="/result">Result</Link>{" "} 
         {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
         <Link to="/login">Logout</Link>
       </div>
@@ -132,6 +133,7 @@ function InfoPage() {
           data={matches}
         />
         <Link to="/">Home</Link>{" "}
+        <Link to="/result">Result</Link>{" "} 
         {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
         <Link to="/login">Logout</Link>
       </div>

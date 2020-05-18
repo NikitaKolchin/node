@@ -7,8 +7,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Chrome HomePage",
-            "url": "http://localhost:3000/",
+            "name": "Chrome ResultPage",
+            "url": "http://localhost:3000/result",
             "webRoot": "${workspaceFolder}"
         },
         {
