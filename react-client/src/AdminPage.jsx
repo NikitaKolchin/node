@@ -268,6 +268,9 @@ function AdminPage() {
             </Alert>
           )}
           <p>
+            <Link to="/">Home</Link>{" "}
+            <Link to="/result">Result</Link>{" "}
+            <Link to="/info">Info</Link>{" "}
             <Link to="/login">Logout</Link>
           </p>
         </Grid>
