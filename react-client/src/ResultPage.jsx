@@ -15,7 +15,7 @@ function ResultPage() {
       const users = await backendService.getAll("users");
       const matches = await backendService.getAll("matches");
       const sortedMatches = matches.sort((a,b)=>{ return a.matchNo - b.matchNo  });
-      const onlyMatches = sortedMatches.map((match, index) => { // отсортировать matches?
+      const onlyMatches = sortedMatches.map((match, index) => { 
         let add =
           match.home !== null && match.home !== undefined
             ? `(${match.home}:${match.away})`
