@@ -10,7 +10,9 @@ function HomePage() {
 
   const columns = [
     { title: "_id", field: "_id", hidden: true },
-    { title: "№", field: "matchNo", editable: "never" },
+    { title: "№", field: "matchNo", editable: "never",
+ //      customSort: (a, b) =>( a.matchNo - b.matchNo ),
+       defaultSort: 'asc' },
     {
       title: "Home",
       field: "homeName",
@@ -32,18 +34,22 @@ function HomePage() {
       editable: "never",
     },
     { title: "Enable", field: "enable", type: "boolean", editable: "never" },
-    // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
     {
       title: "Pets",
-      render: (rowData) => (
-        <div
-          style={{ backgroundColor: rowData["pets"] === 5 ? "red" : rowData["pets"] === 3 ? "yellow" : rowData["pets"] === 1? "green" : "white"  }}
-        >
-          {rowData.pets}{" "}
-        </div>
-      ),
+      field: "pets"
     },
-    //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>}
+    //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>},
+    // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
+    // {
+    //   title: "Pets",
+    //   render: (rowData) => (
+    //     <div
+    //       style={{ backgroundColor: rowData["pets"] === 5 ? "red" : rowData["pets"] === 3 ? "yellow" : rowData["pets"] === 1? "green" : "white"  }}
+    //     >
+    //       {rowData.pets}{" "}
+    //     </div>
+    //   ),
+    // },
   ];
 
   useEffect(() => {
@@ -69,7 +75,7 @@ function HomePage() {
         temp.away = stake.away;
         temp.realHome = match.home;
         temp.realAway = match.away;
-        temp.pets = calcPets(temp);
+        temp.pets = backendService.calcPets(temp.home, temp.away, temp.realHome, temp.realAway);
         return (match = temp);
       } else {
         return match;
@@ -77,23 +83,7 @@ function HomePage() {
     });
   };
 
-  const calcPets = (temp) => {
-    const { home, away, realHome, realAway } = temp;
-    if(home===null || away === null) return 0;
-    let difference = home - away;
-    let realDifference = realHome - realAway;
-    if (home === realHome && away === realAway) {
-      return 5;
-    } else if (difference === realDifference) {
-      return 3;
-    } else if (
-      (difference > 0 && realDifference > 0) ||
-      (difference < 0 && realDifference < 0) ||
-      (difference === 0 && realDifference === 0)
-    ) {
-      return 1;
-    } else return 0;
-  };
+
 
   if (matches.loading || stakes.loading)
     return <div>Loading information...</div>;
@@ -104,17 +94,18 @@ function HomePage() {
         options={{
           pageSize: 10,
           pageSizeOptions: [10, 60],
+          sorting: true,
           rowStyle: (rowData) => {
             if (rowData.pets === 5) {
-              return { backgroundColor: "Gold" };
+              return { backgroundColor: "#C9B037" };  //gold
             } else if (rowData.pets === 3) {
-              return { backgroundColor: "GoldenRod" };
+              return { backgroundColor: "#B4B4B4" };  //silver
             } else if (rowData.pets === 1) {
-              return { backgroundColor: "LightGreen" };
+              return { backgroundColor: "#AD8A56" };  //bronze
             }
           },
         }}
-        title={`Set stakes, ${currentUser.username}`}
+        title={`Это домашняя страница, тут нужно делать ставки, ${currentUser.username}`}
         columns={columns}
         data={getMergedArray(stakes, matches)}
         detailPanel={(rowData) => {

@@ -9,7 +9,7 @@ function InfoPage() {
 
   const columns = [
     { title: "_id", field: "_id", hidden: true },
-    { title: "№", field: "matchNo" },
+    { title: "№", field: "matchNo",  defaultSort: 'asc' },
     { title: "Home", field: "homeName", lookup: backendService.teams },
     { title: "Score", field: "home", type: "numeric" },
     { title: "Away", field: "awayName", lookup: backendService.teams },
@@ -128,7 +128,7 @@ function InfoPage() {
             pageSize: 10,
             pageSizeOptions: [10, 60],
           }}
-          title={`Matches Information for ${currentUser.username}`}
+          title={`Тут информация о матчах, ${currentUser.username}`}
           columns={columns.slice(0, -2)}
           data={matches}
         />
