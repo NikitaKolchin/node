@@ -4,9 +4,9 @@ import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 
 function ResultPage() {
-  let [currentUser, setCurrentUser] = useState({});
-  let [columns, setColumns] = useState({ loading: true });
-  let [data, setData] = useState({ loading: true });
+  const [currentUser, setCurrentUser] = useState({});
+  const [columns, setColumns] = useState({ loading: true });
+  const [data, setData] = useState({ loading: true });
 
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("user")));

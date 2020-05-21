@@ -4,8 +4,8 @@ import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 
 function InfoPage() {
-  let [currentUser, setCurrentUser] = useState({});
-  let [matches, setMatches] = useState({ loading: true });
+  const [currentUser, setCurrentUser] = useState({});
+  const [matches, setMatches] = useState({ loading: true });
 
   const columns = [
     { title: "_id", field: "_id", hidden: true },

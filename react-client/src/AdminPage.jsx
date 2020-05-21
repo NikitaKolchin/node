@@ -24,10 +24,10 @@ import {
 import { Link } from "react-router-dom";
 
 function AdminPage() {
-  let [currentUser, setCurrentUser] = useState({});
-  let [newUser, setNewUser] = useState("");
-  let [users, setUsers] = useState({ loading: true });
-  let [answer, setAnswer] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [newUser, setNewUser] = useState("");
+  const [users, setUsers] = useState({ loading: true });
+  const [answer, setAnswer] = useState(false);
 
   // useEffect(async ()=>{
   //     setCurrentUser(JSON.parse(localStorage.getItem('user')));
