@@ -1,6 +1,7 @@
 import React from "react";
-
 import { backendService } from "./backend.service";
+
+let crypto = require('crypto');
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class LoginPage extends React.Component {
     }
 
     this.setState({ loading: true });
-    backendService.login(username, password).then(
+    backendService.login(username, crypto.createHash('sha256').update(password).digest('base64')).then(
       (user) => {
         const { from } = this.props.location.state || {
           from: { pathname: "/" },

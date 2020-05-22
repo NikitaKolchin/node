@@ -23,6 +23,8 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
+let crypto = require('crypto');
+
 function AdminPage() {
   const [currentUser, setCurrentUser] = useState({});
   const [newUser, setNewUser] = useState("");
@@ -84,7 +86,7 @@ function AdminPage() {
         _id: foundUser._id,
         // 'username': document.getElementById(`username_${e.target.id}`).value,
         username: foundUser.username,
-        password: foundUser.password,
+        password: crypto.createHash('sha256').update(foundUser.password).digest('base64'),
         firstName: foundUser.firstName,
         lastName: foundUser.lastName,
         email: foundUser.email,
@@ -108,9 +110,6 @@ function AdminPage() {
 
   function handleChangeField(e) {
     let { name, value, id } = e.target;
-    // let field = e.target.id.split('_')[0];
-    // let id = e.target.id.split('_')[1];
-    // let value = e.target.value;
     if (name === "isAdmin") {
       value = e.target.checked;
     }
@@ -175,7 +174,7 @@ function AdminPage() {
                     id={user._id}
                     type={user.showPassword ? "text" : "password"}
                     name="password"
-                    defaultValue={user.password}
+//                    defaultValue={user.password}
                     onChange={handleChangeField}
                     endAdornment={
                       <InputAdornment position="end">
