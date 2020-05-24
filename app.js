@@ -7,6 +7,12 @@ var hash = crypto.createHash('sha256').update(code).digest('base64');
 
 console.log(hash);
 
+const stakes = ","
+.repeat(52)
+
+
+
+console.log(stakes);
 
 // const MongoClient = require("mongodb").MongoClient;
 

@@ -23,22 +23,11 @@ const teams = {
   Уэльс: "Уэльс",
 };
 
-export const backendService = {
-  login,
-  logout,
-  updateOne,
-  addOne,
-  deleteOne,
-  getAll,
-  getStakesByUserId,
-  setStakesByUserId,
-  teams,
-  calcPets
-};
+
 
 const backendHost = localBackendHost;
 
-function calcPets ( home, away, realHome, realAway) {
+const calcPets = ( home, away, realHome, realAway) => {
   if(home===null || away === null || realHome ===null || realAway === null) return 0;
   let difference = home - away;
   let realDifference = realHome - realAway;
@@ -55,7 +44,7 @@ function calcPets ( home, away, realHome, realAway) {
   } else return 0;
 }
 
-function authHeader() {
+const authHeader = () => {
   // return authorization header with basic auth credentials
   let user = JSON.parse(localStorage.getItem("user"));
 
@@ -69,7 +58,7 @@ function authHeader() {
   }
 }
 
-async function login(username, password) {
+ const login = async (username, password) => {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -88,12 +77,12 @@ async function login(username, password) {
   return user;
 }
 
-function logout() {
+const logout= ()=>{
   // remove user from local storage to log user out
   localStorage.removeItem("user");
 }
 
-async function getAll(type) {
+ const getAll = async (type) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
@@ -103,74 +92,29 @@ async function getAll(type) {
   return handleResponse(response);
 }
 
-async function addOne(type, obj) {
-  let body;
-  if (type === "users") {
-    body = {
-      username: obj.username,
-      password: obj.password,
-      firstName: obj.firstName,
-      lastName: obj.lastName,
-      email: obj.email,
-      isAdmin: obj.isAdmin,
-    };
-  } else if (type === "matches") {
-    body = {
-      matchNo: obj.matchNo,
-      home: obj.home,
-      away: obj.away,
-      homeName: obj.homeName,
-      awayName: obj.awayName,
-      coefficient: obj.coefficient,
-      enable: obj.enable,
-      visability: obj.visability,
-    };
-  }
+ const addOne = async (type, obj) => {
   const requestOptions = {
     method: "POST",
     headers: authHeader(),
-    body: JSON.stringify(body),
+    body: JSON.stringify({...obj}),
   };
 
   const response = await fetch(`${backendHost}/${type}/`, requestOptions);
   return handleResponse(response);
 }
 
-async function updateOne(type, obj) {
-  let body;
-  if (type === "users") {
-    body = {
-      username: obj.username,
-      password: obj.password,
-      firstName: obj.firstName,
-      lastName: obj.lastName,
-      email: obj.email,
-      isAdmin: obj.isAdmin,
-    };
-  } else if (type === "matches") {
-    body = {
-      matchNo: obj.matchNo,
-      home: obj.home,
-      away: obj.away,
-      homeName: obj.homeName,
-      awayName: obj.awayName,
-      coefficient: obj.coefficient,
-      enable: obj.enable,
-      visability: obj.visability,
-    };
-  }
-
+const updateOne = async (type, obj) => {
   const requestOptions = {
     method: "PUT",
     headers: authHeader(),
-    body: JSON.stringify(body),
+    body: JSON.stringify({...obj}),
   };
 
   const response = await fetch(`${backendHost}/${type}/${obj._id}`, requestOptions);
   return handleResponse(response);
 }
 
-async function deleteOne(type, id) {
+ const deleteOne = async (type, id) => {
   const requestOptions = {
     method: "DELETE",
     headers: authHeader(),
@@ -180,7 +124,7 @@ async function deleteOne(type, id) {
   return handleResponse(response);
 }
 
-async function getStakesByUserId(id) {
+const getStakesByUserId = async (id) => {
   const requestOptions = {
     method: "GET",
     headers: authHeader(),
@@ -190,22 +134,18 @@ async function getStakesByUserId(id) {
   return handleResponse(response);
 }
 
-async function setStakesByUserId(id, stake) {
-  let body = {
-    home: stake.home,
-    away: stake.away,
-  };
+ const setStakesByUserId = async (id, stake) => {
   const requestOptions = {
     method: "PUT",
     headers: authHeader(),
-    body: JSON.stringify(body),
+    body: JSON.stringify({...stake}),
   };
 
   const response = await fetch(`${backendHost}/users/${id}/stakes/${stake.matchNo}`, requestOptions);
   return handleResponse(response);
 }
 
-function handleResponse(response) {
+const handleResponse = (response) => {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
@@ -221,3 +161,16 @@ function handleResponse(response) {
     return data;
   });
 }
+
+export const backendService = {
+  login,
+  logout,
+  updateOne,
+  addOne,
+  deleteOne,
+  getAll,
+  getStakesByUserId,
+  setStakesByUserId,
+  teams,
+  calcPets
+};
