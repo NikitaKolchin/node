@@ -1,8 +1,8 @@
 //const usersController = require('../users/users.controller');
 const findUser = require("../users/findUser");
-module.exports = basicAuth;
 
-async function basicAuth(req, res, next) {
+
+const basicAuth = async (req, res, next) => {
   // make authenticate path public
   if (req.path === "/users/authenticate") {
     return next();
@@ -34,3 +34,5 @@ async function basicAuth(req, res, next) {
 
   next();
 }
+
+module.exports = basicAuth;

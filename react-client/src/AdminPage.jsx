@@ -75,7 +75,6 @@ function AdminPage() {
     backendService
       .deleteOne("users", id)
       .then(setUsers((users) => users.filter((item) => item._id !== id)))
-      //чего-то непонятное тут setUsers должен вернуть ans. А я чего-то не нашел что вообще возвращает функция из хука
       .then((ans) => setAnswer(ans));
   };
 
@@ -89,14 +88,6 @@ function AdminPage() {
           .update(foundUser.password)
           .digest("base64"):
           foundUser.password,
-        // _id: foundUser._id,
-        // // 'username': document.getElementById(`username_${e.target.id}`).value,
-        // username: foundUser.username,
-        // password: crypto.createHash('sha256').update(foundUser.password).digest('base64'),
-        // firstName: foundUser.firstName,
-        // lastName: foundUser.lastName,
-        // email: foundUser.email,
-        // isAdmin: foundUser.isAdmin,
       })
       .then((data) => {
         setUsers(
@@ -109,7 +100,7 @@ function AdminPage() {
   };
 
   // const handleChangeField = (event) => {
-  //   let value = event
+  //   let value = event.target.value
   //   const { name, id } = event.target
   //   if (name === 'isAdmin') {
   //     value = event.target.checked
@@ -137,18 +128,7 @@ function AdminPage() {
   };
 
   const handleClickShowPassword = (id) => {
-    // setUsers(users.map((item) => ({ ...item, showPassword: item._id === id ? !item.showPassword : showPassword })))
-    setUsers((users) =>
-      users.map((item) => {
-        if (item._id === id) {
-          let temp = Object.assign({}, item);
-          temp.showPassword = !item.showPassword;
-          return (item = temp);
-        } else {
-          return item;
-        }
-      })
-    );
+     setUsers(users.map((item) => ({ ...item, showPassword: item._id === id ? !item.showPassword : item.showPassword })));
   };
 
   const handleMouseDownPassword = (event) => {
