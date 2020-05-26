@@ -9,7 +9,7 @@ function InfoPage() {
 
   const columns = [
     { title: "_id", field: "_id", hidden: true },
-    { title: "№", field: "matchNo",  defaultSort: 'asc' },
+    { title: "№", field: "matchNo", defaultSort: "asc" },
     { title: "Home", field: "homeName", lookup: backendService.teams },
     { title: "Score", field: "home", type: "numeric" },
     { title: "Away", field: "awayName", lookup: backendService.teams },
@@ -21,9 +21,7 @@ function InfoPage() {
 
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
-    (async () => {
-      setMatches(await backendService.getAll("matches"));
-    })();
+    backendService.getAll("matches").then((matches) => setMatches(matches));
   }, []);
 
   if (matches.loading) return <div>Loading information...</div>;
@@ -41,81 +39,25 @@ function InfoPage() {
           data={matches}
           editable={{
             onRowAdd: (newData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                  backendService
-                    .addOne("matches", {
-                      matchNo: newData.matchNo,
-                      home: newData.home,
-                      away: newData.away,
-                      homeName: newData.homeName,
-                      awayName: newData.awayName,
-                      coefficient: newData.coefficient,
-                      enable: newData.enable,
-                      visability: newData.visability,
-                    })
-                    .then(setMatches((matches) => matches.concat(newData)));
-                }, 600);
-              }),
+              backendService
+                .addOne("matches", {
+                  ...newData,
+                })
+                .then(setMatches((matches) => matches.concat(newData))),
             onRowUpdate: (newData, oldData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                  backendService
-                    .updateOne("matches", {
-                      _id: newData._id,
-                      matchNo: newData.matchNo,
-                      home: newData.home,
-                      away: newData.away,
-                      homeName: newData.homeName,
-                      awayName: newData.awayName,
-                      coefficient: newData.coefficient,
-                      enable: newData.enable,
-                      visability: newData.visability,
-                    })
-                    .then((data) => {
-                      setMatches((matches) =>
-                        matches.map((item) => {
-                          if (item._id === data._id) {
-                            return (item = data);
-                          } else {
-                            return item;
-                          }
-                        })
-                      );
-                    });
-                  //   if (oldData) {
-                  //     setState((prevState) => {
-                  //       const data = [...prevState.data];
-                  //       data[data.indexOf(oldData)] = newData;
-                  //       return { ...prevState, data };
-                  //     });
-                  //   }
-                }, 600);
-              }),
+              backendService
+                .updateOne("matches", {
+                  ...newData,
+                })
+                .then((data) =>
+                  setMatches((matches) => matches.map((item) => (item._id === data._id ? data : item)))),
             onRowDelete: (oldData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
                   backendService
                     .deleteOne("matches", oldData._id)
-                    .then(
-                      setMatches((matches) =>
-                        matches.filter((item) => item._id !== oldData._id)
-                      )
-                    );
-                  //   setState((prevState) => {
-                  //     const data = [...prevState.data];
-                  //     data.splice(data.indexOf(oldData), 1);
-                  //     return { ...prevState, data };
-                  //   });
-                }, 600);
-              }),
+                    .then(setMatches((matches) => matches.filter((item) => item._id !== oldData._id)))
           }}
         />
-        <Link to="/">Home</Link>{" "}
-        <Link to="/result">Result</Link>{" "} 
+        <Link to="/">Home</Link> <Link to="/result">Result</Link>{" "}
         {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
         <Link to="/login">Logout</Link>
       </div>
@@ -132,8 +74,7 @@ function InfoPage() {
           columns={columns.slice(0, -2)}
           data={matches}
         />
-        <Link to="/">Home</Link>{" "}
-        <Link to="/result">Result</Link>{" "} 
+        <Link to="/">Home</Link> <Link to="/result">Result</Link>{" "}
         {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
         <Link to="/login">Logout</Link>
       </div>

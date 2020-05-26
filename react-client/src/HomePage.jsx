@@ -53,18 +53,25 @@ function HomePage() {
   ];
 
   useEffect(() => {
-    setCurrentUser(JSON.parse(localStorage.getItem("user")));
-    (async () => {
-      setStakes(
-        await backendService.getStakesByUserId(
-          JSON.parse(localStorage.getItem("user"))._id
-        )
-      );
-    })();
-    (async () => {
-      setMatches(await backendService.getAll("matches"));
-    })();
+    const user = JSON.parse(localStorage.getItem("user"));
+    setCurrentUser(user);
+    backendService.getStakesByUserId(user._id).then(stakes => setStakes(stakes));
+    backendService.getAll("matches").then(matches => setMatches(matches));
   }, []);
+
+  // useEffect(() => {
+  //   setCurrentUser(JSON.parse(localStorage.getItem("user")));
+  //   (async () => {
+  //     setStakes(
+  //       await backendService.getStakesByUserId(
+  //         JSON.parse(localStorage.getItem("user"))._id
+  //       )
+  //     );
+  //   })();
+  //   (async () => {
+  //     setMatches(await backendService.getAll("matches"));
+  //   })();
+  // }, []);
 
   const getMergedArray = (stakesArr, matchesArr) => {
     return matchesArr.map((match) => {
@@ -123,16 +130,15 @@ function HomePage() {
           onRowUpdate: (newData, oldData) =>
             backendService
               .setStakesByUserId(currentUser._id, {
-                matchNo: newData.matchNo,
-                home: newData.home,
-                away: newData.away,
+                // matchNo: newData.matchNo,
+                // home: newData.home,
+                // away: newData.away,
+                ...newData
               })
               .then((data) => {
                 setStakes((stakes) =>
                   stakes.map((item) => {
-                    let updatedStake = data.stakes.find(
-                      (st) => st.matchNo === newData.matchNo
-                    );
+                    let updatedStake = data.stakes.find((st) => st.matchNo === newData.matchNo);
                     if (item.matchNo === updatedStake.matchNo) {
                       let temp = Object.assign({}, item);
                       temp.home = updatedStake.home;
