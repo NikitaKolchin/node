@@ -8,6 +8,8 @@
         "url": "https://github.com/NikitaKolchin/node.git"
     },
     "scripts": {
+        "start-mongod-d": "mongod.exe --dbpath D:\\data\\db\\",
+        "start-mongod-c": "mongod.exe --dbpath C:\\data\\db\\",
         "start": "nodemon ./server.js",
         "debug": "node --inspect server.js"
     },

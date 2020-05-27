@@ -61,9 +61,8 @@ function AdminPage() {
       .addOne("users", { username: newUser.username })
       .then((newUser) => {
         setUsers((users) => users.concat(newUser));
-        setAnswer(
-          JSON.parse(`{"message":"User ${newUser.username} has been added"}`)
-        );
+        setAnswer(JSON.parse(`{"message":"User ${newUser.username} has been added"}`));
+        setNewUser({ username: ''});
       });
   };
 
@@ -90,12 +89,8 @@ function AdminPage() {
           foundUser.password,
       })
       .then((data) => {
-        setUsers(
-          users.map((item) => (item._id === data._id ? (item = data) : item))
-        );
-        setAnswer(
-          JSON.parse(`{"message":"User ${data.username} has been changed"}`)
-        );
+        setUsers(users.map((item) => (item._id === data._id ? (item = data) : item)));
+        setAnswer(JSON.parse(`{"message":"User ${data.username} has been changed"}`));
       });
   };
 
@@ -240,7 +235,7 @@ function AdminPage() {
           </Grid>
         )}
         <Grid item>
-          <TextField type="text_ a" onChange={handleChangeNewUserName} />
+          <TextField type="text_ a" onChange={handleChangeNewUserName} value={newUser.username}/>
           <Fab
             color="primary"
             aria-label="add"
