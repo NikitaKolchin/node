@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { backendService } from "./backend.service";
+import {
+  Button,
+  Grid,
+  Typography,
+  Input,
+  InputLabel,
+  IconButton,
+  InputAdornment,
+  FormControl,
+} from "@material-ui/core";
 
 let crypto = require("crypto");
 
@@ -47,57 +57,59 @@ const LoginPage = (props) => {
         }
       );
   };
-
+ // добавить Alert вместо div и ShowPassword
   return (
-    <div>
-      <div>
-        Username: test
-        <br />
-        Password: test
-      </div>
-      <h2>Login</h2>
-      <form name="form" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            className="form-control"
-            name="username"
-            value={state.username}
-            onChange={handleChange}
-          />
-          {state.submitted && !state.username && (
-            <div>Username is required</div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password"
-            value={state.password}
-            onChange={handleChange}
-          />
-          {state.submitted && !state.password && (
-            <div>Password is required</div>
-          )}
-        </div>
-        <div>
-          <button disabled={state.loading}>Login</button>
+    <Grid container>
+      <Grid item>
+        <Typography variant="h3" gutterBottom>
+          Login:
+        </Typography>
+      </Grid>
+
+        <Grid container>
+          <FormControl>
+            <InputLabel htmlFor="username">Username</InputLabel>
+            <Input
+              type="text"
+              className="form-control"
+              name="username"
+              value={state.username}
+              onChange={handleChange}
+            />
+            {state.submitted && !state.username && (
+              <div>Username is required</div>
+            )}
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
+              type="password"
+              className="form-control"
+              name="password"
+              value={state.password}
+              onChange={handleChange}
+            />
+            {state.submitted && !state.password && (
+              <div>Password is required</div>
+            )}
+          </FormControl>
+        </Grid>
+
+        <Grid item>
+          <Button type="submit" variant="contained" disabled={state.loading} onClick={handleSubmit}>
+            Login
+          </Button>
           {state.loading && (
             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           )}
-        </div>
-        {state.error && <div>{state.error}</div>}
-      </form>
-    </div>
+            {state.error && <div>{state.error}</div>}
+        </Grid>
+      
+    </Grid>
   );
 };
 
 export { LoginPage };
-
-
 
 // import React, { useState, useEffect } from "react";
 // import { backendService } from "./backend.service";
