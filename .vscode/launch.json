@@ -21,7 +21,7 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Debug beckend",
+            "name": "Debug backend",
             "port": 9229,
             "skipFiles": [
                 "<node_internals>/**"
