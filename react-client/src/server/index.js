@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(express.static('build'));
 // use basic HTTP auth to secure the api
 app.use(basicAuth);
 
