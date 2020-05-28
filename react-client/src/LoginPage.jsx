@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { backendService } from "./backend.service";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import {
+  Visibility,
+  VisibilityOff,
+} from "@material-ui/icons";
 import {
   Button,
   Grid,
@@ -21,6 +26,7 @@ const LoginPage = (props) => {
     error: "",
     loading: false,
     submitted: false,
+    showPassword: false
   });
 
   const handleChange = (e) => {
@@ -57,6 +63,14 @@ const LoginPage = (props) => {
         }
       );
   };
+
+  const handleClickShowPassword = (sp) => {
+    setState((state) => ({ ...state, showPassword: sp }));
+ };
+
+ const handleMouseDownPassword = (event) => {
+   event.preventDefault();
+ };
  // добавить Alert вместо div и ShowPassword
   return (
     <Grid container>
@@ -77,20 +91,38 @@ const LoginPage = (props) => {
               onChange={handleChange}
             />
             {state.submitted && !state.username && (
-              <div>Username is required</div>
+                      <Alert severity="warning">
+                      <AlertTitle>Username is required</AlertTitle>
+                    </Alert>
             )}
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
-              type="password"
+              type={state.showPassword ? "text" : "password"}
               className="form-control"
               name="password"
               value={state.password}
               onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => handleClickShowPassword(!state.showPassword)}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {state.showPassword ? (
+                      <Visibility />
+                    ) : (
+                      <VisibilityOff />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             {state.submitted && !state.password && (
-              <div>Password is required</div>
+                      <Alert severity="warning">
+                      <AlertTitle>Password is required</AlertTitle>
+                    </Alert>
             )}
           </FormControl>
         </Grid>
@@ -102,7 +134,11 @@ const LoginPage = (props) => {
           {state.loading && (
             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           )}
-            {state.error && <div>{state.error}</div>}
+            {state.error && (
+            <Alert severity="error">
+              <AlertTitle> {state.error}</AlertTitle>
+            </Alert>
+          )}
         </Grid>
       
     </Grid>
