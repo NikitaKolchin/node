@@ -35,7 +35,7 @@ function InfoPage() {
             pageSize: 10,
             pageSizeOptions: [10, 60],
           }}
-          title={`Matches Information for ${currentUser.username}`}
+          title={`Информация о матчах, ${currentUser.username}`}
           columns={columns}
           data={matches}
           editable={{
