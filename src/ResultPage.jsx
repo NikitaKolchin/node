@@ -61,7 +61,7 @@ function ResultPage() {
             realMatch !== undefined &&
             realMatch.visability === false
           )
-            break;
+            continue;
           let pets =
             match !== undefined && realMatch !== undefined
               ? backendService.calcPets(
