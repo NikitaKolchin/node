@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
+import {MyMenu} from "./MyMenu";
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState({});
@@ -10,9 +10,13 @@ function HomePage() {
 
   const columns = [
     { title: "_id", field: "_id", hidden: true },
-    { title: "№", field: "matchNo", editable: "never",
- //      customSort: (a, b) =>( a.matchNo - b.matchNo ),
-       defaultSort: 'asc' },
+    {
+      title: "№",
+      field: "matchNo",
+      editable: "never",
+      //      customSort: (a, b) =>( a.matchNo - b.matchNo ),
+      defaultSort: "asc",
+    },
     {
       title: "Home",
       field: "homeName",
@@ -36,7 +40,7 @@ function HomePage() {
     { title: "Enable", field: "enable", type: "boolean", editable: "never" },
     {
       title: "Pets",
-      field: "pets"
+      field: "pets",
     },
     //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>},
     // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
@@ -55,23 +59,11 @@ function HomePage() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     setCurrentUser(user);
-    backendService.getStakesByUserId(user._id).then(stakes => setStakes(stakes));
-    backendService.getAll("matches").then(matches => setMatches(matches));
+    backendService
+      .getStakesByUserId(user._id)
+      .then((stakes) => setStakes(stakes));
+    backendService.getAll("matches").then((matches) => setMatches(matches));
   }, []);
-
-  // useEffect(() => {
-  //   setCurrentUser(JSON.parse(localStorage.getItem("user")));
-  //   (async () => {
-  //     setStakes(
-  //       await backendService.getStakesByUserId(
-  //         JSON.parse(localStorage.getItem("user"))._id
-  //       )
-  //     );
-  //   })();
-  //   (async () => {
-  //     setMatches(await backendService.getAll("matches"));
-  //   })();
-  // }, []);
 
   const getMergedArray = (stakesArr, matchesArr) => {
     return matchesArr.map((match) => {
@@ -82,7 +74,12 @@ function HomePage() {
         temp.away = stake.away;
         temp.realHome = match.home;
         temp.realAway = match.away;
-        temp.pets = backendService.calcPets(temp.home, temp.away, temp.realHome, temp.realAway);
+        temp.pets = backendService.calcPets(
+          temp.home,
+          temp.away,
+          temp.realHome,
+          temp.realAway
+        );
         return (match = temp);
       } else {
         return match;
@@ -90,13 +87,12 @@ function HomePage() {
     });
   };
 
-
-
   if (matches.loading || stakes.loading)
     return <div>Loading information...</div>;
 
   return (
     <div>
+      <MyMenu currentUser = {currentUser} />
       <MaterialTable
         options={{
           pageSize: 10,
@@ -104,11 +100,11 @@ function HomePage() {
           sorting: true,
           rowStyle: (rowData) => {
             if (rowData.pets === 5) {
-              return { backgroundColor: "#C9B037" };  //gold
+              return { backgroundColor: "#C9B037" }; //gold
             } else if (rowData.pets === 3) {
-              return { backgroundColor: "#B4B4B4" };  //silver
+              return { backgroundColor: "#B4B4B4" }; //silver
             } else if (rowData.pets === 1) {
-              return { backgroundColor: "#AD8A56" };  //bronze
+              return { backgroundColor: "#AD8A56" }; //bronze
             }
           },
         }}
@@ -133,12 +129,14 @@ function HomePage() {
                 // matchNo: newData.matchNo,
                 // home: newData.home,
                 // away: newData.away,
-                ...newData
+                ...newData,
               })
               .then((data) => {
                 setStakes((stakes) =>
                   stakes.map((item) => {
-                    let updatedStake = data.stakes.find((st) => st.matchNo === newData.matchNo);
+                    let updatedStake = data.stakes.find(
+                      (st) => st.matchNo === newData.matchNo
+                    );
                     if (item.matchNo === updatedStake.matchNo) {
                       let temp = Object.assign({}, item);
                       temp.home = updatedStake.home;
@@ -152,12 +150,6 @@ function HomePage() {
               }),
         }}
       />
-      <p>
-        <Link to="/result">Result</Link>{" "}
-        <Link to="/info">Info</Link>{" "}
-        {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
-        <Link to="/login">Logout</Link>
-      </p>
     </div>
   );
 }

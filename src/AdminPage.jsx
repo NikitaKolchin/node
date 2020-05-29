@@ -21,7 +21,7 @@ import {
   FormControl,
   Fab,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { MyMenu } from "./MyMenu";
 
 const crypto = require("crypto");
 
@@ -31,17 +31,6 @@ function AdminPage() {
   const [users, setUsers] = useState({ loading: true });
   const [answer, setAnswer] = useState(false);
 
-  // useEffect(async ()=>{
-  //     setCurrentUser(JSON.parse(localStorage.getItem('user')));
-  //     setUsers(await userService.getAll().then(users=>
-  //         users.map((item) =>{
-  //             let temp = Object.assign({}, item);
-  //             temp.showPassword = false;
-  //             return item = temp;
-  //         } )
-  //     ))
-  // },[]);
-
   useEffect(() => {
     let clean = false;
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
@@ -49,7 +38,11 @@ function AdminPage() {
       //это чтобы избежать рендера на не существующих объектах
       if (!clean) {
         setUsers(
-          users.map((item) => ({ ...item, passwordChanged: false, showPassword: false }))
+          users.map((item) => ({
+            ...item,
+            passwordChanged: false,
+            showPassword: false,
+          }))
         );
       }
     });
@@ -61,8 +54,10 @@ function AdminPage() {
       .addOne("users", { username: newUser.username })
       .then((newUser) => {
         setUsers((users) => users.concat(newUser));
-        setAnswer(JSON.parse(`{"message":"User ${newUser.username} has been added"}`));
-        setNewUser({ username: ''});
+        setAnswer(
+          JSON.parse(`{"message":"User ${newUser.username} has been added"}`)
+        );
+        setNewUser({ username: "" });
       });
   };
 
@@ -82,15 +77,20 @@ function AdminPage() {
     backendService
       .updateOne("users", {
         ...foundUser,
-        password: foundUser.passwordChanged? crypto
-          .createHash("sha256")
-          .update(foundUser.password)
-          .digest("base64"):
-          foundUser.password,
+        password: foundUser.passwordChanged
+          ? crypto
+              .createHash("sha256")
+              .update(foundUser.password)
+              .digest("base64")
+          : foundUser.password,
       })
       .then((data) => {
-        setUsers(users.map((item) => (item._id === data._id ? (item = data) : item)));
-        setAnswer(JSON.parse(`{"message":"User ${data.username} has been changed"}`));
+        setUsers(
+          users.map((item) => (item._id === data._id ? (item = data) : item))
+        );
+        setAnswer(
+          JSON.parse(`{"message":"User ${data.username} has been changed"}`)
+        );
       });
   };
 
@@ -113,7 +113,7 @@ function AdminPage() {
         if (item._id === id) {
           let temp = Object.assign({}, item);
           temp[name] = value;
-          if (name==='password') temp.passwordChanged = true;
+          if (name === "password") temp.passwordChanged = true;
           return (item = temp);
         } else {
           return item;
@@ -123,18 +123,27 @@ function AdminPage() {
   };
 
   const handleClickShowPassword = (id) => {
-     setUsers(users.map((item) => ({ ...item, showPassword: item._id === id ? !item.showPassword : item.showPassword })));
+    setUsers(
+      users.map((item) => ({
+        ...item,
+        showPassword: item._id === id ? !item.showPassword : item.showPassword,
+      }))
+    );
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   //тут можно модную крутилку добавить CircularProgress или еще чего.
   if (users.loading) return <div>Loading information...</div>;
 
   if (currentUser.isAdmin) {
     return (
       <Grid container>
+        <Grid item>
+          <MyMenu currentUser={currentUser} />
+        </Grid>
         <Grid item>
           <Typography variant="h3" gutterBottom>
             Users control panel: {currentUser.username}
@@ -235,7 +244,11 @@ function AdminPage() {
           </Grid>
         )}
         <Grid item>
-          <TextField type="text_ a" onChange={handleChangeNewUserName} value={newUser.username}/>
+          <TextField
+            type="text_ a"
+            onChange={handleChangeNewUserName}
+            value={newUser.username}
+          />
           <Fab
             color="primary"
             aria-label="add"
@@ -251,10 +264,6 @@ function AdminPage() {
               <AlertTitle> {answer.message}</AlertTitle>
             </Alert>
           )}
-          <p>
-            <Link to="/">Home</Link> <Link to="/result">Result</Link>{" "}
-            <Link to="/info">Info</Link> <Link to="/login">Logout</Link>
-          </p>
         </Grid>
       </Grid>
     );

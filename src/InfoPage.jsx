@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
+import { MyMenu } from "./MyMenu";
 
 function InfoPage() {
   const [currentUser, setCurrentUser] = useState({});
@@ -29,6 +30,7 @@ function InfoPage() {
   if (currentUser.isAdmin) {
     return (
       <div>
+        <MyMenu currentUser = {currentUser} />
         <MaterialTable
           options={{
             pageSize: 10,
@@ -57,9 +59,6 @@ function InfoPage() {
                     .then(setMatches((matches) => matches.filter((item) => item._id !== oldData._id)))
           }}
         />
-        <Link to="/">Home</Link> <Link to="/result">Result</Link>{" "}
-        {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
-        <Link to="/login">Logout</Link>
       </div>
     );
   } else
@@ -74,9 +73,6 @@ function InfoPage() {
           columns={columns.slice(0, -2)}
           data={matches}
         />
-        <Link to="/">Home</Link> <Link to="/result">Result</Link>{" "}
-        {currentUser.isAdmin && <Link to="/admin">Admin</Link>}{" "}
-        <Link to="/login">Logout</Link>
       </div>
     );
 }
