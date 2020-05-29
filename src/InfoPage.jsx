@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 import { MyMenu } from "./MyMenu";
@@ -64,6 +63,7 @@ function InfoPage() {
   } else
     return (
       <div>
+        <MyMenu currentUser = {currentUser} />
         <MaterialTable
           options={{
             pageSize: 10,
