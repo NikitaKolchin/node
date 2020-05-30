@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 import { MyMenu } from "./MyMenu";
@@ -85,7 +85,7 @@ function ResultPage() {
     })();
   }, []);
 
-  if (columns.loading || data.loading) return <div>Loading information...</div>;
+  if (columns.loading || data.loading) return <div><CircularProgress/></div>;
 
   return (
     <div>

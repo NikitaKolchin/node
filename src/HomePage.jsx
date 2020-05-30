@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 import {MyMenu} from "./MyMenu";
+import { CircularProgress } from "@material-ui/core";
 
 function HomePage() {
   const [currentUser, setCurrentUser] = useState({});
@@ -88,7 +89,7 @@ function HomePage() {
   };
 
   if (matches.loading || stakes.loading)
-    return <div>Loading information...</div>;
+    return <div><CircularProgress/> </div>;
 
   return (
     <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
 import { backendService } from "./backend.service";
 import { MyMenu } from "./MyMenu";
+import { CircularProgress } from "@material-ui/core";
 
 function InfoPage() {
   const [currentUser, setCurrentUser] = useState({});
@@ -24,7 +25,7 @@ function InfoPage() {
     backendService.getAll("matches").then((matches) => setMatches(matches));
   }, []);
 
-  if (matches.loading) return <div>Loading information...</div>;
+  if (matches.loading) return <div><CircularProgress/> </div>;
 
   if (currentUser.isAdmin) {
     return (

@@ -20,6 +20,7 @@ import {
   TextField,
   FormControl,
   Fab,
+  CircularProgress,
 } from "@material-ui/core";
 import { MyMenu } from "./MyMenu";
 
@@ -136,7 +137,7 @@ function AdminPage() {
   };
 
   //тут можно модную крутилку добавить CircularProgress или еще чего.
-  if (users.loading) return <div>Loading information...</div>;
+  if (users.loading) return <div><CircularProgress/></div>;
 
   if (currentUser.isAdmin) {
     return (
