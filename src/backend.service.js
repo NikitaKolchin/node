@@ -1,5 +1,5 @@
 const localBackendHost = "http://localhost:4000";
-const cloudBackendHost = "https://allin-dot-node-euro-2021.ew.r.appspot.com";
+const cloudBackendHost = "https://node-euro-2021.ew.r.appspot.com";
 let teams = {};
 "Бельгия,Италия,Россия,Финляндия,Франция,Польша,Украина,Испания,Турция,Англия,Чехия,Швеция,Нидерланды,Германия,Хорватия,Австрия,Португалия,Швейцария,Дания,Уэльс"
   .split(",")
