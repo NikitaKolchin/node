@@ -54,7 +54,7 @@ function HomePage() {
     //       {rowData.pets}{" "}
     //     </div>
     //   ),
-    // }
+    // },
   ];
 
   useEffect(() => {
