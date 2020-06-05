@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { backendService } from "./backend.service";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import {
@@ -76,7 +76,7 @@ const LoginPage = (props) => {
     <Grid container>
       <Grid item>
         <Typography variant="h3" gutterBottom>
-          Login:
+          Login(build_0506_7):
         </Typography>
       </Grid>
 
