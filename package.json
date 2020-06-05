@@ -26,7 +26,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "https://node-euro-2021.ew.r.appspot.com/",
   "browserslist": {
     "production": [
       ">0.2%",

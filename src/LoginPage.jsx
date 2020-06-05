@@ -76,7 +76,7 @@ const LoginPage = (props) => {
     <Grid container>
       <Grid item>
         <Typography variant="h3" gutterBottom>
-          Login(build_0506_7):
+          Login(build_0506_9):
         </Typography>
       </Grid>
 
