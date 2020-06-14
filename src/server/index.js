@@ -42,7 +42,7 @@ const port =
 const server = app.listen(port, function () {
   console.log("Server listening on port " + port);
   console.log("process.env.NODE_ENV ", process.env.NODE_ENV);
-  console.log("mongodb ", config.get("localConnectionString"));
+  console.log("build 1406_1");
 });
 
 // require("rootpath")();
