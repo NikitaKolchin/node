@@ -70,7 +70,7 @@ function InfoPage() {
             pageSize: 10,
             pageSizeOptions: [10, 60],
           }}
-          title={`Тут информация о матчах, ${currentUser.username}`}
+          title={`${currentUser.username}, это наш эталон, реальный счёт, коэффициенты на матчи, их доступность для ставок и видимость собраны тут`}
           columns={columns.slice(0, -2)}
           data={matches}
         />

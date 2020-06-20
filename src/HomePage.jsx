@@ -42,6 +42,7 @@ function HomePage() {
     {
       title: "Pets",
       field: "pets",
+      editable: "never"
     },
     //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>},
     // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
@@ -109,7 +110,7 @@ function HomePage() {
             }
           },
         }}
-        title={`Это домашняя страница, тут нужно делать ставки, ${currentUser.username}`}
+        title={`Это домашняя страница, тут нужно делать ставки, ${currentUser.username}, для этого воспользуйся пиктограммой карандаша в строке, которую хочешь исправить`}
         columns={columns}
         data={getMergedArray(stakes, matches)}
         detailPanel={(rowData) => {

@@ -95,7 +95,7 @@ function ResultPage() {
           pageSize: 10,
           pageSizeOptions: [10, 60],
         }}
-        title={`Это общая таблица результатов, ${currentUser.username}`}
+        title={`Это общая таблица результатов, ${currentUser.username}, тут ничего не нужно редактировать, просто посмотри как справляются другие игроки`}
         columns={columns}
         data={data}
       />
