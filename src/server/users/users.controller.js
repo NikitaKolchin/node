@@ -34,7 +34,7 @@ router.post("/", async (req, res, next) => {
     const stakes = ","
       .repeat(52)
       .split(",")
-      .map((_, index) => ({ matchNo: index + 1, home: null, away: null }));
+      .map((_, index) => ({ matchNo: index + 1, home: null, away: null, money: null }));
     const user = new User({
       // username: req.body.username,
       // password: req.body.password,
@@ -154,6 +154,7 @@ router.put("/:id/stakes/:matchNo", getUser, async (req, res) => {
       $set: {
         "stakes.$.home": req.body.home,
         "stakes.$.away": req.body.away,
+        "stakes.$.money": req.body.money
       },
     };
     const userArterUpdate = await User.findOneAndUpdate(

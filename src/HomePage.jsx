@@ -44,6 +44,11 @@ function HomePage() {
       field: "pets",
       editable: "never"
     },
+    {
+      title: "Money",
+      field: "money",
+      editable: "never"
+    },
     //  { title: "MySk", render: rowData => <div>Матч {rowData.homeName} - {rowData.awayName} сыгран, счёт {rowData.realHome} : {rowData.realAway}</div>},
     // { title: "Pets", field: "pets", type: "numeric",  editable: "never" }
     // {
@@ -82,6 +87,7 @@ function HomePage() {
           temp.realHome,
           temp.realAway
         );
+        temp.money = stake.money;
         return (match = temp);
       } else {
         return match;

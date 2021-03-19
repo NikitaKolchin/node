@@ -16,6 +16,7 @@ const userSchema = new Schema(
         matchNo: Number,
         home: Number,
         away: Number,
+        money: Number
       },
     ],
   },

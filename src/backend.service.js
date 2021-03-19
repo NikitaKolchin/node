@@ -33,6 +33,12 @@ const calcPets = (home, away, realHome, realAway) => {
   }
 };
 
+const calcMoney = (currentUserId, currentMatchNo, currentStakes, matches, users) => {
+  const stakeAmount = 1000;
+  
+  return currentMatchNo*100;
+};
+
 const authHeader = () => {
   // return authorization header with basic auth credentials
   const user = JSON.parse(localStorage.getItem("user"));
@@ -114,6 +120,7 @@ export const backendService = {
     }),
   teams,
   calcPets,
+  calcMoney,
 };
 
 // const localBackendHost = "http://localhost:4000";
