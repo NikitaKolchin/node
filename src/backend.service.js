@@ -33,10 +33,14 @@ const calcPets = (home, away, realHome, realAway) => {
   }
 };
 
-const calcMoney = (currentUserId, currentMatchNo, currentStakes, matches, users) => {
-  const stakeAmount = 1000;
-  
-  return currentMatchNo*100;
+const calcMoney = async () => {
+   const users = await backendService.getAll('users');
+   const matches = await backendService.getAll('matches');
+   const allData = users.map((user, index) => {
+    user.stakes[1] = {...user, matchNo1: matches[index].matchNo}
+    return user
+   }) 
+   console.log(allData);
 };
 
 const authHeader = () => {

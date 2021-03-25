@@ -87,7 +87,8 @@ function HomePage() {
           temp.realHome,
           temp.realAway
         );
-        temp.money = stake.money;
+         temp.money = stake.money;
+      // temp.money = backendService.calcMoney(0,1)
         return (match = temp);
       } else {
         return match;

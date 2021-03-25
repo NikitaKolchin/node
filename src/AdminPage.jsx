@@ -137,6 +137,11 @@ function AdminPage() {
     event.preventDefault();
   };
 
+  const handleUpdateMoney= () => {
+    backendService.calcMoney();
+  }
+
+
   //тут можно модную крутилку добавить CircularProgress или еще чего.
   if (users.loading) return <div><CircularProgress/></div>;
 
@@ -273,7 +278,7 @@ function AdminPage() {
                     type="button"
                     variant="contained"
                     color="primary"
-                    onClick={handleAddItem}
+                    onClick={handleUpdateMoney}
                     startIcon={<CloudUpload />}
                   >
                     {" "}

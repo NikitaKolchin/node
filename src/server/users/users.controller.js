@@ -26,15 +26,15 @@ router.get("/", async (req, res, next) => {
 //add new user
 router.post("/", async (req, res, next) => {
   if (req.user.isAdmin) {
-    // const stakes = []
-    // for (let i = 1; i < 52; i++) {
-    //   stakes.push({ matchNo: i, home: null, away: null })
-    // }
+    const stakes = []
+    for (let i = 1; i < 52; i++) {
+      stakes.push({ matchNo: i, home: null, away: null, money: null })
+    }
     //Как альтернатива, по тестам рпботающая медленнее, но зато в одну строку))))
-    const stakes = ","
-      .repeat(52)
-      .split(",")
-      .map((_, index) => ({ matchNo: index + 1, home: null, away: null, money: null }));
+    // const stakes = ","
+    //   .repeat(52)
+    //   .split(",")
+    //   .map((_, index) => ({ matchNo: index + 1, home: null, away: null, money: null }));
     const user = new User({
       // username: req.body.username,
       // password: req.body.password,
