@@ -34,7 +34,7 @@ function InfoPage() {
         <MaterialTable
           options={{
             pageSize: 10,
-            pageSizeOptions: [10, 60],
+            pageSizeOptions: [10, 51],
           }}
           title={`Информация о матчах, ${currentUser.username}`}
           columns={columns}
@@ -68,7 +68,7 @@ function InfoPage() {
         <MaterialTable
           options={{
             pageSize: 10,
-            pageSizeOptions: [10, 60],
+            pageSizeOptions: [10, 51],
           }}
           title={`${currentUser.username}, это наш эталон, реальный счёт, коэффициенты на матчи, их доступность для ставок и видимость собраны тут`}
           columns={columns.slice(0, -2)}

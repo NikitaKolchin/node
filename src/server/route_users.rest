@@ -73,16 +73,24 @@ Authorization: Basic kin:test
 
 
 ### get user's stakes by id 
-GET http://localhost:4000/users/5eaf037815ddc728dc670fbc/stakes/
-Authorization: Basic kin:test
+GET http://localhost:4000/users/605eccfc1c81212dc86ba066/stakes/
+Authorization: Basic kin:n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
 
 ### update user stakes by id 
-PUT http://localhost:4000/users/5eaf037815ddc728dc670fbc/stakes/3
+PUT http://localhost:4000/users/605eccfc1c81212dc86ba066/stakes/3
 Authorization: Basic kin:n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
 Content-Type: application/json
 
 {  
-    "home": 6, 
-    "away": 1,
-    "money":2000
+    "home": 5, 
+    "away": 1
+}
+
+### update user money by id 
+PUT http://localhost:4000/users/605eccfc1c81212dc86ba066/money/3
+Authorization: Basic kin:n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
+Content-Type: application/json
+
+{  
+    "money":1000
 }

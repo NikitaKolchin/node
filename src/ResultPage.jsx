@@ -15,9 +15,10 @@ function ResultPage() {
     (async () => {
       const users = await backendService.getAll("users");
       const matches = await backendService.getAll("matches");
-      const sortedMatches = matches.sort((a, b) => {
-        return a.matchNo - b.matchNo;
-      });
+      // const sortedMatches = matches.sort((a, b) => {
+      //   return a.matchNo - b.matchNo;
+      // });
+      const sortedMatches = backendService.getSortedMatches(matches);
       const onlyMatches = sortedMatches.map((match, index) => {
         let add =
           match.home !== null && match.home !== undefined
@@ -93,7 +94,7 @@ function ResultPage() {
       <MaterialTable
         options={{
           pageSize: 10,
-          pageSizeOptions: [10, 60],
+          pageSizeOptions: [10, 51],
         }}
         title={`Это общая таблица результатов, ${currentUser.username}, тут ничего не нужно редактировать, просто посмотри как справляются другие игроки`}
         columns={columns}

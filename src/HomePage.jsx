@@ -105,7 +105,7 @@ function HomePage() {
       <MaterialTable
         options={{
           pageSize: 10,
-          pageSizeOptions: [10, 60],
+          pageSizeOptions: [10, 51],
           sorting: true,
           rowStyle: (rowData) => {
             if (rowData.pets === 5) {

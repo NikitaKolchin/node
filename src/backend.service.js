@@ -33,14 +33,124 @@ const calcPets = (home, away, realHome, realAway) => {
   }
 };
 
+const getSortedMatches = (matches) => {
+  const sortedMatches = matches.sort((a, b) => {
+    return a.matchNo - b.matchNo;
+  });
+  return sortedMatches;
+};
+
+const getAllData = async () => {
+  const users = await backendService.getAll("users");
+  const matches = await backendService.getAll("matches");
+  const sortedMatches = getSortedMatches(matches);
+  const allDataNotFiltred = sortedMatches.map((match, index) => {
+    let allDataRows = {
+      matchNo: match.matchNo,
+      home: match.home,
+      away: match.away,
+      passed: false,
+      coefficient: match.coefficient,
+      usersStakes: [],
+    };
+    if (!match.enable) {
+      allDataRows.passed = true;
+      users.forEach((user) => {
+        let allDataRow = {};
+        allDataRow.userId = user._id;
+        allDataRow.username = user.username; //убрать потом
+        if (
+          user.stakes[index].home == null ||
+          user.stakes[index].away == null
+        ) {
+          //сделал ли пользователь ставку в закрытой области
+          allDataRow.home = 10;
+          allDataRow.away = 10;
+        } else {
+          allDataRow.home = user.stakes[index].home;
+          allDataRow.away = user.stakes[index].away;
+        }
+        allDataRows.usersStakes.push(allDataRow);
+      });
+    }
+    return allDataRows;
+  });
+  const allData = allDataNotFiltred.filter((data) => data.passed === true);
+  console.log(allData);
+  return allData;
+};
+
+const zeroingMoney = async () => {
+  const users = await backendService.getAll("users");
+  users.forEach((user) => {
+    user.stakes.forEach((stake) => {
+      backendService.setMoneyByUserId(user._id, {
+        matchNo: stake.matchNo,
+        money: 0,
+      });
+    });
+  });
+  return "done";
+};
+
+const getStandartMatchPrice = async () => {
+  const users = await backendService.getAll("users");
+  const matches = await backendService.getAll("matches");
+  const contribution = 500;
+  let coefSum = 0;
+  matches.forEach((match) => {
+    coefSum += match.coefficient;
+  });
+  return Math.round((contribution * users.length) / coefSum);
+};
+
 const calcMoney = async () => {
-   const users = await backendService.getAll('users');
-   const matches = await backendService.getAll('matches');
-   const allData = users.map((user, index) => {
-    user.stakes[1] = {...user, matchNo1: matches[index].matchNo}
-    return user
-   }) 
-   console.log(allData);
+  const allData = await getAllData();
+  const standartMatchPrice = await getStandartMatchPrice();
+  let payments = [];
+  let matchPrice = standartMatchPrice;
+  let unrealezedPrize = 0;
+  allData.forEach((match) => {
+    //для каждого матча
+    let vinners = [];
+    match.usersStakes.forEach((stake) => {
+      //для каждой ставки считаем победителей
+      if (
+        backendService.calcPets(
+          stake.home,
+          stake.away,
+          match.home,
+          match.away
+        ) === 5
+      ) {
+        vinners.push({ userId: stake.userId });
+        console.log(stake.username + " " + match.matchNo + "  " + vinners);
+      }
+    });
+    if (vinners.length === 0) {
+      unrealezedPrize = unrealezedPrize + standartMatchPrice;
+      matchPrice = 0;
+    } else {
+      matchPrice = standartMatchPrice + unrealezedPrize;
+      unrealezedPrize = 0;
+    }
+    let money =
+      vinners.length > 0
+        ? (match.coefficient * matchPrice) / vinners.length
+        : 0;
+    payments.push({ matchNo: match.matchNo, vinners: vinners, money: money });
+  });
+  payments.forEach((match) => {
+    //не обнуляет если не победитель
+    match.vinners.forEach((vin) => {
+      backendService.setMoneyByUserId(vin.userId, {
+        matchNo: match.matchNo,
+        money: match.money,
+      });
+    });
+  });
+  console.log(payments);
+  return "done";
 };
 
 const authHeader = () => {
@@ -81,9 +191,11 @@ const request = async (url, method, requestOptions) =>
 
 const requestObj = {
   get: async (url, requestOptions) => await request(url, "GET", requestOptions),
-  post: async (url, requestOptions) => await request(url, "POST", requestOptions),
+  post: async (url, requestOptions) =>
+    await request(url, "POST", requestOptions),
   put: async (url, requestOptions) => await request(url, "PUT", requestOptions),
-  delete: async (url, requestOptions) => await request(url, "DELETE", requestOptions),
+  delete: async (url, requestOptions) =>
+    await request(url, "DELETE", requestOptions),
 };
 
 // let requestObj = {};
@@ -122,10 +234,46 @@ export const backendService = {
     await requestObj.put(`users/${id}/stakes/${stake.matchNo}`, {
       body: JSON.stringify({ ...stake }),
     }),
+  setMoneyByUserId: async (id, stake) =>
+    await requestObj.put(`users/${id}/money/${stake.matchNo}`, {
+      body: JSON.stringify({ ...stake }),
+    }),
   teams,
   calcPets,
   calcMoney,
+  zeroingMoney,
+  getSortedMatches,
 };
+
+//   const allData = users.flatMap(user => {
+//     let allDataRows =[];
+//     sortedMatches.forEach((match, index) => {
+//       let allDataRow;
+//       if ((match.matchNo === user.stakes[index].matchNo) && !match.enable){
+//         allDataRow = user.stakes[index];
+//         allDataRow.userId = user._id;
+//         if (user.stakes[index].home == null || user.stakes[index].away == null){ //сделал ли пользователь ставку в закрытой области
+//           // user.stakes[index].home = 10;
+//           // user.stakes[index].away = 10;
+//           allDataRow.home = 10;
+//           allDataRow.away = 10;
+//         }
+//         else{
+//           // user.stakes[index].realHome = match.home;
+//           // user.stakes[index].realAway = match.away;
+//           allDataRow.realHome = match.home;
+//           allDataRow.realAway = match.away;
+//         }
+//         //user.stakes[index].passed = true;
+//         allDataRow.password =true;
+//         allDataRows.push(allDataRow);
+//         //console.log(index +" "+user.username +" "+match.matchNo+" "+match.home+" "+match.away+" "+user.stakes[index].home+" "+user.stakes[index].away)
+//       }
+//      })
+//     return allDataRows;
+//    })
+//    return allData;
+// };
 
 // const localBackendHost = "http://localhost:4000";
 // const cloudBackendHost = "http://node-euro-2021.appspot.com";

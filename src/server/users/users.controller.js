@@ -154,12 +154,34 @@ router.put("/:id/stakes/:matchNo", getUser, async (req, res) => {
       $set: {
         "stakes.$.home": req.body.home,
         "stakes.$.away": req.body.away,
-        "stakes.$.money": req.body.money
+        // "stakes.$.money": req.body.money
       },
     };
     const userArterUpdate = await User.findOneAndUpdate(
       { _id: res.user.id, "stakes.matchNo": req.params.matchNo },
       updatedStake,
+      { upsert: true, new: true }
+    );
+    res.json(userArterUpdate);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+//update money by user and matchNo
+router.put("/:id/money/:matchNo", getUser, async (req, res) => {
+  try {
+    //юзер должен ставить за себя - сделать проверку ----------------------------------------------------------------------------------------------------------------
+    const updatedMoney = {
+      $set: {
+        // "stakes.$.home": req.body.home,
+        // "stakes.$.away": req.body.away,
+        "stakes.$.money": req.body.money
+      },
+    };
+    const userArterUpdate = await User.findOneAndUpdate(
+      { _id: res.user.id, "stakes.matchNo": req.params.matchNo },
+      updatedMoney,
       { upsert: true, new: true }
     );
     res.json(userArterUpdate);

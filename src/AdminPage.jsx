@@ -138,9 +138,12 @@ function AdminPage() {
   };
 
   const handleUpdateMoney= () => {
-    backendService.calcMoney();
+    backendService.calcMoney().then(data => setAnswer(JSON.parse(`{"message":"Update ${data}"}`)));
   }
-
+  
+  const handleZeroingMoney= () => {
+    backendService.zeroingMoney().then(data => setAnswer(JSON.parse(`{"message":"Zeroing ${data}"}`)));
+  }
 
   //тут можно модную крутилку добавить CircularProgress или еще чего.
   if (users.loading) return <div><CircularProgress/></div>;
@@ -283,6 +286,18 @@ function AdminPage() {
                   >
                     {" "}
                     Обновить суммы{" "}
+                  </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                    type="button"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleZeroingMoney}
+                    startIcon={<Delete />}
+                  >
+                    {" "}
+                    Обнулить суммы{" "}
                   </Button>
             </Grid>
           </Grid>
