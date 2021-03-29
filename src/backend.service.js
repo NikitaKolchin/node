@@ -1,12 +1,12 @@
-const localBackendHost = "http://localhost:4000";
-//const cloudBackendHost = "https://node-euro-2021.ew.r.appspot.com";
+//const localBackendHost = "http://localhost:4000";
+const cloudBackendHost = "https://node-euro-2021.ew.r.appspot.com";
 let teams = {};
 //"Бельгия,Италия,Россия,Финляндия,Франция,Польша,Украина,Испания,Турция,Англия,Чехия,Швеция,Нидерланды,Германия,Хорватия,Австрия,Португалия,Швейцария,Дания,Уэльс"
 "Турция,Италия,Уэльс,Швейцария,Дания,Финляндия,Бельгия,Россия,Нидерланды,Украина,Австрия,Северная Македония,Англия,Хорватия,Шотландия,Чехия,Испания,Швеция,Польша,Словакия,Венгрия,Португалия,Франция,Германия"
   .split(",")
   .forEach((item) => (teams = { ...teams, [item]: item }));
 
-const backendHost = localBackendHost;
+const backendHost = cloudBackendHost;
 
 const calcPets = (home, away, realHome, realAway) => {
   if (
