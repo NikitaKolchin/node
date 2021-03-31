@@ -39,10 +39,10 @@ const port =
   process.env.NODE_ENV === "production"
     ? config.get("prodPort")
     : config.get("devPort");
-const server = app.listen(port, function () {
+app.listen(port, function () {
   console.log("Server listening on port " + port);
   console.log("process.env.NODE_ENV ", process.env.NODE_ENV);
-  console.log("build 210329_5");
+  console.log("build 210331");
 });
 
 // require("rootpath")();

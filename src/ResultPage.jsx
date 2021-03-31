@@ -48,6 +48,7 @@ function ResultPage() {
       const columns = [
         { title: "Пользователи", field: "user" },
         { title: "Очки", field: "pets" },
+        { title: "Выйгрыш", field: "money"}
       ].concat(onlyMatches);
       setColumns(columns);
 
@@ -55,6 +56,8 @@ function ResultPage() {
         let temp = Object.assign({}, user);
         temp.user = user.username;
         temp.pets = 0;
+        temp.money = 0;
+        let money =0;
         for (let i = 1; i < 52; i++) {
           let match = user.stakes.find((item) => item.matchNo === i);
           let realMatch = matches.find((item) => item.matchNo === i);
@@ -64,6 +67,8 @@ function ResultPage() {
             realMatch.visability === false
           )
             continue;
+          money = temp.stakes[i-1].money+money; 
+          let moneyView = temp.stakes[i-1].money!==0?`; ${temp.stakes[i-1].money}₽`:'';
           let pets =
             match !== undefined && realMatch !== undefined
               ? backendService.calcPets(
@@ -75,11 +80,12 @@ function ResultPage() {
               : 0;
           temp[i] =
             match.home !== null && match.home !== undefined
-              ? `${match.home}:${match.away} (${pets})`
+              ? `${match.home}:${match.away} (${pets}${moneyView})`
               : "";
           temp[`pets_${i}`] = pets;
           temp.pets = temp.pets + pets;
         }
+        temp.money = money;
         return temp;
       });
       setData(data);
