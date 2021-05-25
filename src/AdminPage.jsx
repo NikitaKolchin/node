@@ -292,7 +292,7 @@ function AdminPage() {
               <Button
                     type="button"
                     variant="contained"
-                    color="primary"
+                    color="default"
                     onClick={handleZeroingMoney}
                     startIcon={<Delete />}
                   >

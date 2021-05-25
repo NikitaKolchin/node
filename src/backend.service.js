@@ -93,6 +93,39 @@ const zeroingMoney = async () => {
   return "done";
 };
 
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const setTestMatches = async (numberOfMatches, zeroing) => {
+  const matches = await backendService.getAll("matches");
+  const sortedMatches = getSortedMatches(matches);
+  for (let i = 0; i < numberOfMatches; i++) {
+    let { home, away, enable, ...rest } = sortedMatches[i];
+    backendService.updateOne("matches", {
+      ...rest,
+      home: zeroing?null:getRandomInt(0, 4),
+      away: zeroing?null:getRandomInt(0, 4),
+      enable: zeroing?true:false,
+    });
+  }
+  return "done";
+};
+
+const setTestStakes= async (numberOfMatches, zeroing) => {
+  const users = await backendService.getAll("users");
+  users.forEach(user =>{
+    for(let i=0; i < numberOfMatches; i++) {
+      backendService.setStakesByUserId(user._id, {
+        matchNo: user.stakes[i].matchNo,
+        home: zeroing?null:getRandomInt(0, 4),
+        away: zeroing?null:getRandomInt(0, 4),
+      });
+    }
+  })
+  return "done";
+};
+
 const getStandartMatchPrice = async () => {
   const users = await backendService.getAll("users");
   const matches = await backendService.getAll("matches");
@@ -114,6 +147,7 @@ const calcMoney = async () => {
     //для каждого матча
     let vinners = [];
     match.usersStakes.forEach((stake) => {
+      console.log(stake.username);
       //для каждой ставки считаем победителей
       if (
         backendService.calcPets(
@@ -243,6 +277,8 @@ export const backendService = {
   calcMoney,
   zeroingMoney,
   getSortedMatches,
+  setTestMatches,
+  setTestStakes,
 };
 
 //   const allData = users.flatMap(user => {

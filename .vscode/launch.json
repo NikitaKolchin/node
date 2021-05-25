@@ -7,6 +7,13 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "Chrome TestPage",
+            "url": "http://localhost:3000/test",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "name": "Chrome ResultPage",
             "url": "http://localhost:3000/result",
             "webRoot": "${workspaceFolder}"

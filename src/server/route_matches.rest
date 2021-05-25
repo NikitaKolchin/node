@@ -27,17 +27,17 @@ Authorization: Basic kin:test
 
 ### update match by id
 PUT http://localhost:4000/matches/5eb56cf44b8cad04cc07a506
-Authorization: Basic kin:test
+Authorization: Basic kin:n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=
 Content-Type: application/json
 
 { 
-    "matchNo": 2, 
+    "matchNo": 1, 
     "home": null,
     "away": null, 
-    "homeName": "Франция",
-    "awayName": "Финляндия",
+    "homeName": "Турция",
+    "awayName": "Италия",
     "coefficient": 1,
-    "enable": true, 
+    "enable": false, 
     "visability": true
 }
 

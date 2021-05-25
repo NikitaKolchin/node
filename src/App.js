@@ -7,6 +7,7 @@ import { LoginPage } from "./LoginPage";
 import { AdminPage } from "./AdminPage";
 import { InfoPage } from "./InfoPage";
 import { ResultPage } from "./ResultPage";
+import { TestPage } from "./TestPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <PrivateRoute exact path="/admin" component={AdminPage} />
             <PrivateRoute exact path="/info" component={InfoPage} />
             <PrivateRoute exact path="/result" component={ResultPage} />
+            <PrivateRoute exact path="/test" component={TestPage} />
           </div>
         </Switch>
       </Router>
