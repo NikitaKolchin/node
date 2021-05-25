@@ -42,8 +42,13 @@ function MyMenu(props) {
         {props.currentUser.isAdmin && (
           <MenuItem onClick={handleClose}>
             <Link to="/admin">Администрирование</Link>
-          </MenuItem>
+          </MenuItem>          
         )}
+        {props.currentUser.isAdmin && (
+          <MenuItem onClick={handleClose}>
+            <Link to="/test">Тестирование</Link>
+          </MenuItem>          
+        )}        
         <MenuItem onClick={handleClose}>
           <Link to="/login">Выйти</Link>
         </MenuItem>
