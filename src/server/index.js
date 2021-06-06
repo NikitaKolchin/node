@@ -42,7 +42,7 @@ const port =
 app.listen(port, function () {
   console.log("Server listening on port " + port);
   console.log("process.env.NODE_ENV ", process.env.NODE_ENV);
-  console.log("build 210525");
+  console.log("build 210606_gcloud_beckend");
 });
 
 // require("rootpath")();
