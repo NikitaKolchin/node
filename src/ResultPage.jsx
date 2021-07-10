@@ -48,7 +48,7 @@ function ResultPage() {
       const columns = [
         { title: "Пользователи", field: "user" },
         { title: "Очки", field: "pets" },
-        { title: "Выйгрыш", field: "money"}
+        { title: "Выйгрыш, ₽", field: "money"}
       ].concat(onlyMatches);
       setColumns(columns);
 
@@ -57,7 +57,7 @@ function ResultPage() {
         temp.user = user.username;
         temp.pets = 0;
         temp.money = 0;
-        let money =0;
+        let money = 0;
         for (let i = 1; i < 52; i++) {
           let match = user.stakes.find((item) => item.matchNo === i);
           let realMatch = matches.find((item) => item.matchNo === i);
@@ -67,8 +67,8 @@ function ResultPage() {
             realMatch.visability === false
           )
             continue;
-          money = temp.stakes[i-1].money+money; 
-          let moneyView = temp.stakes[i-1].money!==0?`; ${temp.stakes[i-1].money}₽`:'';
+          money = Math.round(temp.stakes[i-1].money)+money; 
+          let moneyView = temp.stakes[i-1].money!==0?`; ${Math.round(temp.stakes[i-1].money)}₽`:'';
           let pets =
             match !== undefined && realMatch !== undefined
               ? backendService.calcPets(
@@ -99,8 +99,8 @@ function ResultPage() {
       <MyMenu  currentUser = {currentUser} />
       <MaterialTable
         options={{
-          pageSize: 10,
-          pageSizeOptions: [10, 51],
+          pageSize: 15,
+          pageSizeOptions: [15, 30],
         }}
         title={`Это общая таблица результатов, ${currentUser.username}, тут ничего не нужно редактировать, просто посмотри как справляются другие игроки`}
         columns={columns}
