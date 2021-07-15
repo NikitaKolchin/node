@@ -147,7 +147,7 @@ const calcMoney = async () => {
     //для каждого матча
     let vinners = [];
     match.usersStakes.forEach((stake) => {
-      console.log(stake.username);
+     // console.log(stake.username);
       //для каждой ставки считаем победителей
       if (
         backendService.calcPets(
@@ -158,20 +158,21 @@ const calcMoney = async () => {
         ) === 5
       ) {
         vinners.push({ userId: stake.userId });
-        console.log(stake.username + " " + match.matchNo + "  " + vinners);
+      //  console.log(stake.username + " " + match.matchNo + "  " + vinners);
       }
     });
     if (vinners.length === 0) {
-      unrealezedPrize = unrealezedPrize + standartMatchPrice;
+      unrealezedPrize = unrealezedPrize + standartMatchPrice*match.coefficient;
       matchPrice = 0;
     } else {
-      matchPrice = standartMatchPrice + unrealezedPrize;
+      matchPrice = standartMatchPrice*match.coefficient + unrealezedPrize;
       unrealezedPrize = 0;
     }
     let money =
       vinners.length > 0
-        ? (match.coefficient * matchPrice) / vinners.length
+        ? matchPrice / vinners.length
         : 0;
+    console.log (match.matchNo + " ---------" + match.coefficient + " ---------" + matchPrice  + " ---------" + unrealezedPrize)
     payments.push({ matchNo: match.matchNo, vinners: vinners, money: money });
   });
   payments.forEach((match) => {
