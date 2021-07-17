@@ -27,7 +27,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   if (req.user.isAdmin) {
     const stakes = []
-    for (let i = 1; i < 52; i++) {
+    for (let i = 1; i < 52; i++) { //явное количество матчей!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       stakes.push({ matchNo: i, home: null, away: null, money: null })
     }
     //Как альтернатива, по тестам рпботающая медленнее, но зато в одну строку))))
